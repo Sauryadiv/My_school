@@ -51,17 +51,23 @@
 
         .timer-text { color: #ffb703; font-size: 16px; margin-top: 35px; font-weight: bold; letter-spacing: 1px; }
 
-        /* --- 2. COMMON LAYOUT & UI --- */
-        .page-container { display: none; padding: 12px; opacity: 0; transition: opacity 0.3s ease; max-width: 1000px; margin: 0 auto; }
-        .page-container.active { display: block; opacity: 1; }
+        /* --- 2. COMMON LAYOUT & UI (FIXED OVERLAP ISSUE) --- */
+        .page-container { 
+            display: none; 
+            padding: 12px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        .page-container.active { 
+            display: block; 
+        }
+
         .top-action-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .back-btn { background: #ffb703; color: #1e1b4b; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
         .app-header { background-color: #1e1b4b; color: white; padding: 18px; text-align: center; border-radius: 12px; margin-bottom: 20px; border-bottom: 4px solid #ffb703; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
         /* MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .vertical-menu-stack { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
-
         .menu-card { background: white; padding: 20px 10px; border-radius: 16px; text-align: center; cursor: pointer; border-top: 5px solid #1e1b4b; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .menu-card:active { transform: scale(0.96); }
         .menu-card h3 { color: #1e1b4b; margin-top: 8px; font-size: 16px; font-weight: 700; }
@@ -73,10 +79,10 @@
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-weight: bold; color: #1e1b4b; font-size: 13px; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
         
         .search-box-bar { margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
-        .search-box-bar input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; }
+        .search-box-bar input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; background: #fff; }
 
         .btn-add-toggle { background: #ffb703; color: #1e1b4b; border: none; padding: 10px 20px; font-weight: bold; font-size: 15px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .btn-submit { width: 100%; background: #1e1b4b; color: #ffb703; border: none; padding: 12px; font-weight: bold; font-size: 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
@@ -84,7 +90,7 @@
         .data-table-container { overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; text-align: left; }
         .data-table th { background-color: #1e1b4b; color: #ffb703; padding: 10px; border: 1px solid #334155; white-space: nowrap; }
-        .data-table td { padding: 8px 10px; border: 1px solid #cbd5e1; color: #1e293b; vertical-align: middle; }
+        .data-table td { padding: 8px 10px; border: 1px solid #cbd5e1; color: #1e293b; vertical-align: middle; background: #fff; }
         .data-table tr:nth-child(even) { background-color: #f8fafc; }
 
         .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
@@ -112,7 +118,7 @@
         <div class="timer-text" id="countdown">Opening App in 5s...</div>
     </div>
 
-    <!-- MAIN DASHBOARD (ALL MENUS INCLUDED) -->
+    <!-- MAIN DASHBOARD -->
     <div id="main-menu" class="page-container active">
         <div class="app-header">
             <h2>Saraswati Shishu Niketan J H School</h2>
@@ -241,7 +247,7 @@
         </div>
     </div>
 
-    <!-- PLACEHOLDER PAGES FOR OTHER MENUS -->
+    <!-- OTHER PAGES -->
     <div id="admission-form-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>New Admission Form</h2></div><div class="info-card"><p>Admission form section is ready here.</p></div></div>
     <div id="fee-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>Fee Management</h2></div><div class="info-card"><p>Fee management section is ready here.</p></div></div>
     <div id="staff-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>Staff Directory</h2></div><div class="info-card"><p>Staff directory section is ready here.</p></div></div>
@@ -264,7 +270,7 @@
             }
         }, 1000);
 
-        // Page Navigation Function
+        // Page Navigation Function (Hides all pages, shows only the clicked one)
         function navigateTo(pageId) {
             document.querySelectorAll('.page-container').forEach(page => {
                 page.classList.remove('active');
@@ -342,162 +348,6 @@
                     <td>${student.mobile || ''}</td>
                     <td>${student.aadhar || ''}</td>
                     <td>${student.feeDate || ''}</td>
-                    <td><button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Delete Student Data
-        function deleteStudent(id) {
-            if(confirm('Are you sure you want to delete this student?')) {
-                let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-                students = students.filter(s => s.id !== id);
-                localStorage.setItem('saraswati_students', JSON.stringify(students));
-                renderActiveStudents();
-            }
-        }
-
-        // Initial Load
-        window.onload = function() {
-            renderActiveStudents();
-        }
-    </script>
-</body>
-</html>
-                            <option value="Class 3">Class 3</option>
-                            <option value="Class 4">Class 4</option>
-                            <option value="Class 5">Class 5</option>
-                            <option value="Class 6">Class 6</option>
-                            <option value="Class 7">Class 7</option>
-                            <option value="Class 8">Class 8</option>
-                            <option value="Class 9">Class 9</option>
-                            <option value="Class 10">Class 10</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Aadhaar Number *</label>
-                        <input type="text" id="actAadhar" maxlength="12" required placeholder="12-digit Aadhaar Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Fee Deposit Date *</label>
-                        <input type="date" id="actFeeDate" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn-submit">💾 Save Student</button>
-            </form>
-        </div>
-
-        <div class="info-card">
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Father Name</th>
-                            <th>Class</th>
-                            <th>Mobile</th>
-                            <th>Aadhaar</th>
-                            <th>Fee Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activeStudentsTableBody">
-                        <!-- Data dynamically load hoga -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC FOR DATA SAVING -->
-    <script>
-        // Splash Screen Timer
-        let timeLeft = 5;
-        const countdownTimer = setInterval(() => {
-            timeLeft--;
-            document.getElementById("countdown").innerText = `Opening App in ${timeLeft}s...`;
-            if (timeLeft <= 0) {
-                clearInterval(countdownTimer);
-                document.getElementById("splash-screen").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("splash-screen").style.visibility = "hidden";
-                }, 800);
-            }
-        }, 1000);
-
-        // Page Navigation Function
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page-container').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
-            if(pageId === 'active-students-page') {
-                renderActiveStudents();
-            }
-        }
-
-        // Toggle Form Visibility
-        function toggleActiveStudentForm() {
-            const formContainer = document.getElementById('activeStudentFormContainer');
-            formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Save Student Data to LocalStorage
-        function saveActiveStudent(event) {
-            event.preventDefault();
-
-            const newStudent = {
-                id: Date.now(),
-                srNo: document.getElementById('actSrNo').value,
-                name: document.getElementById('actName').value,
-                father: document.getElementById('actFather').value,
-                mobile: document.getElementById('actMobile').value,
-                className: document.getElementById('actClass').value,
-                aadhar: document.getElementById('actAadhar').value,
-                feeDate: document.getElementById('actFeeDate').value
-            };
-
-            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-            students.push(newStudent);
-            localStorage.setItem('saraswati_students', JSON.stringify(students));
-
-            alert('Student saved successfully!');
-            document.getElementById('activeStudentForm').reset();
-            document.getElementById('activeStudentFormContainer').style.display = 'none';
-            renderActiveStudents();
-        }
-
-        // Render Students in Table
-        function renderActiveStudents() {
-            const tbody = document.getElementById('activeStudentsTableBody');
-            const searchQuery = document.getElementById('activeStudentSearch').value.toLowerCase();
-            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-
-            tbody.innerHTML = '';
-
-            const filteredStudents = students.filter(s => 
-                s.name.toLowerCase().includes(searchQuery) || 
-                s.srNo.toLowerCase().includes(searchQuery)
-            );
-
-            if (filteredStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`;
-                return;
-            }
-
-            filteredStudents.forEach(student => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${student.srNo}</td>
-                    <td><b>${student.name}</b></td>
-                    <td>${student.father}</td>
-                    <td>${student.className}</td>
-                    <td>${student.mobile}</td>
-                    <td>${student.aadhar}</td>
-                    <td>${student.feeDate}</td>
                     <td><button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button></td>
                 `;
                 tbody.appendChild(tr);

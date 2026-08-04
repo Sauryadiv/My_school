@@ -59,12 +59,6 @@
         .download-action-btn { background: #16a34a; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
         .app-header { background-color: #1e1b4b; color: white; padding: 18px; text-align: center; border-radius: 12px; margin-bottom: 20px; border-bottom: 4px solid #ffb703; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
-        /* --- LOGIN PAGE STYLES --- */
-        .login-wrapper { max-width: 400px; margin: 40px auto; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); border-top: 6px solid #ffb703; }
-        .role-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .role-tab-btn { flex: 1; padding: 10px; border: none; background: #e2e8f0; color: #1e1b4b; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .role-tab-btn.active-tab { background: #1e1b4b; color: #ffb703; }
-
         /* MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .vertical-menu-stack { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
@@ -108,7 +102,7 @@
         .table-input-fee { width: 75px; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; }
         .img-preview-thumb { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #ccc; }
 
-        /* --- 4. I-CARD STYLES --- */
+        /* --- 4. I-CARD STYLES (PHOTO ON LEFT, PRINCIPAL AUTHORITY) --- */
         .icard-single-box {
             width: 320px; background: #fff; border-radius: 12px; overflow: hidden;
             border: 3px solid #1e1b4b; box-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0 auto 20px auto;
@@ -130,6 +124,7 @@
         .icard-footer { background: #f8fafc; border-top: 1px solid #cbd5e1; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
         .sig-box { text-align: center; font-size: 9px; font-weight: bold; color: #1e1b4b; }
 
+        /* BUTTON WRAPPER FOR I-CARD VIEW PAGE */
         .icard-action-buttons {
             display: flex;
             justify-content: center;
@@ -196,37 +191,8 @@
         <div class="timer-text" id="countdown">Opening App in 5s...</div>
     </div>
 
-    <!-- LOGIN PAGE -->
-    <div id="login-page" class="page-container">
-        <div class="login-wrapper">
-            <div class="app-header" style="margin-bottom: 15px; padding: 12px;">
-                <h3 style="font-size: 16px;">School Portal Login</h3>
-            </div>
-            
-            <div class="role-tabs">
-                <button type="button" class="role-tab-btn active-tab" id="userTabBtn" onclick="switchLoginRole('user')">User / Student</button>
-                <button type="button" class="role-tab-btn" id="adminTabBtn" onclick="switchLoginRole('admin')">Administrative</button>
-            </div>
-
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label id="loginIdLabel">Username / S.R. No. *</label>
-                    <input type="text" id="loginIdInput" required placeholder="Enter Username">
-                </div>
-                <div class="form-group">
-                    <label>Password / PIN *</label>
-                    <input type="password" id="loginPassInput" required placeholder="Enter Password">
-                </div>
-                <button type="submit" class="btn-submit">🔐 Login to Portal</button>
-            </form>
-        </div>
-    </div>
-
     <!-- MAIN DASHBOARD -->
-    <div id="main-menu" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="logoutSession()" style="background: #ef4444; color: white;">🚪 Logout</button>
-        </div>
+    <div id="main-menu" class="page-container active">
         <div class="app-header">
             <h2>Saraswati Shishu Niketan J H School</h2>
             <p style="color: #ffb703; margin-top: 4px; font-size: 13px;">School Management ERP • Suhag Nagar, Firozabad</p>
@@ -292,7 +258,7 @@
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('students-main-page')">⬅ Back to Student Section</button>
-            <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Register Student</button>
+            <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Add Student</button>
         </div>
         <div class="app-header">
             <h2>Active Student Directory</h2>
@@ -303,12 +269,12 @@
         </div>
 
         <div id="activeStudentFormContainer" class="form-card" style="display:none;">
-            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Student Registration Form</h3>
+            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Fill Student Details</h3>
             <form id="activeStudentForm" onsubmit="saveActiveStudent(event)">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>S.R. Number (Roll No.) *</label>
-                        <input type="text" id="actSrNo" required placeholder="Enter S.R. Number">
+                        <label>Roll No. / S.R. Number *</label>
+                        <input type="text" id="actSrNo" required placeholder="Enter Roll / S.R. Number">
                     </div>
                     <div class="form-group">
                         <label>Student Name *</label>
@@ -355,7 +321,7 @@
                         <input type="number" id="actOldFee" value="0" placeholder="Purani baki fee">
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">💾 Register Student</button>
+                <button type="submit" class="btn-submit">💾 Save Student</button>
             </form>
         </div>
 
@@ -408,14 +374,16 @@
         <div id="docDisplayContent"></div>
     </div>
 
-    <!-- I-CARD VIEW & DOWNLOAD PAGE -->
+    <!-- I-CARD VIEW & DOWNLOAD PAGE (DOWNLOAD BUTTON & BACK BUTTON AT BOTTOM) -->
     <div id="icard-view-page" class="page-container">
         <div class="app-header">
             <h2>Student Identity Card</h2>
         </div>
         
+        <!-- ID Card Display Area -->
         <div id="icardSingleDisplay"></div>
 
+        <!-- Buttons Below I-Card: Download I-Card & Back Button -->
         <div class="icard-action-buttons">
             <button class="btn-back-icard" onclick="navigateTo('icard-page')">⬅ Back</button>
             <button class="btn-download-icard" onclick="downloadICardPDF()">📥 Download I-Card</button>
@@ -477,13 +445,39 @@
         <div class="form-card">
             <form id="studentAdmissionForm" onsubmit="saveStudentData(event)">
                 <div class="form-grid">
-                    <div class="form-group"><label>Admission Date *</label><input type="date" id="admDate" required></div>
-                    <div class="form-group"><label>Roll No. / S.R. No. *</label><input type="text" id="admSrNo" required placeholder="Enter Roll/S.R. Number"></div>
-                    <div class="form-group"><label>Student Full Name *</label><input type="text" id="admName" required placeholder="Enter student name"></div>
-                    <div class="form-group"><label>Father's Name *</label><input type="text" id="admFather" required placeholder="Enter father's name"></div>
-                    <div class="form-group"><label>Mother's Name *</label><input type="text" id="admMother" required placeholder="Enter mother's name"></div>
-                    <div class="form-group"><label>Date of Birth (DOB) *</label><input type="date" id="admDob" required></div>
-                    <div class="form-group"><label>Gender *</label><select id="admGender" required><option value="">-- Select Gender --</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+                    <div class="form-group">
+                        <label>Admission Date *</label>
+                        <input type="date" id="admDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Roll No. / S.R. No. *</label>
+                        <input type="text" id="admSrNo" required placeholder="Enter Roll/S.R. Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Student Full Name *</label>
+                        <input type="text" id="admName" required placeholder="Enter student name">
+                    </div>
+                    <div class="form-group">
+                        <label>Father's Name *</label>
+                        <input type="text" id="admFather" required placeholder="Enter father's name">
+                    </div>
+                    <div class="form-group">
+                        <label>Mother's Name *</label>
+                        <input type="text" id="admMother" required placeholder="Enter mother's name">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth (DOB) *</label>
+                        <input type="date" id="admDob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <select id="admGender" required>
+                            <option value="">-- Select Gender --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Select Class *</label>
                         <select id="admClass" required onchange="updateClassFees()">
@@ -504,8 +498,14 @@
                             <option value="Class 10">Class 10</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="admMobile" maxlength="10" required placeholder="10-digit mobile number"></div>
-                    <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="admAadhar" maxlength="12" required placeholder="12-digit Aadhaar number"></div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" id="admMobile" maxlength="10" required placeholder="10-digit mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label>Aadhaar Number *</label>
+                        <input type="text" id="admAadhar" maxlength="12" required placeholder="12-digit Aadhaar number">
+                    </div>
                     <div class="form-group"><label>Admission Fees (₹)</label><input type="number" id="admAdmissionFee" value="200" readonly></div>
                     <div class="form-group"><label>Uniform Fee (₹)</label><input type="number" id="admUniformFee" value="1000" readonly></div>
                     <div class="form-group"><label>I-Card & Diary Fee (₹)</label><input type="number" id="admIcardDiaryFee" value="100" readonly></div>
@@ -560,20 +560,19 @@
     <div id="staff-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-            <button class="btn-add-toggle" onclick="toggleStaffForm()">➕ Register Administrative</button>
+            <button class="btn-add-toggle" onclick="toggleStaffForm()">➕ Add Staff</button>
         </div>
         <div class="app-header">
-            <h2>Administrative & Staff Management Dashboard</h2>
+            <h2>Staff Management Dashboard</h2>
         </div>
         <div id="activeStaffFormContainer" class="form-card" style="display:none;">
-            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Administrative / Staff Registration Form</h3>
+            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Teacher / Staff Registration Form</h3>
             <form id="staffRegistrationForm" onsubmit="submitStaffDetails(event)">
                 <div class="form-grid">
-                    <div class="form-group"><label>S.R. / Admin ID (SR Number) *</label><input type="text" id="stfSrNo" required placeholder="Enter S.R. / Admin ID"></div>
-                    <div class="form-group"><label>Name *</label><input type="text" id="stfName" required placeholder="Enter Name"></div>
-                    <div class="form-group"><label>Father Name *</label><input type="text" id="stfFather" required placeholder="Enter Father Name"></div>
-                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="stfMobile" maxlength="10" required placeholder="10-digit Mobile Number"></div>
-                    <div class="form-group"><label>Qualification *</label><input type="text" id="stfQual" required placeholder="Qualification"></div>
+                    <div class="form-group"><label>Teacher Name *</label><input type="text" id="stfName" required></div>
+                    <div class="form-group"><label>Father Name *</label><input type="text" id="stfFather" required></div>
+                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="stfMobile" maxlength="10" required></div>
+                    <div class="form-group"><label>Qualification *</label><input type="text" id="stfQual" required></div>
                     <div class="form-group"><label>Upload Resume *</label><input type="file" id="stfResume" accept=".pdf,.doc,.docx" required></div>
                     <div class="form-group"><label>Upload Photo *</label><input type="file" id="stfPhoto" accept="image/*" required></div>
                 </div>
@@ -582,30 +581,28 @@
         </div>
 
         <div id="staffTestContainer" class="form-card" style="display:none; border-top: 4px solid #16a34a;">
-            <h3 style="color: #16a34a; margin-bottom: 10px; font-size: 16px;">📝 Administrative Assessment Test</h3>
+            <h3 style="color: #16a34a; margin-bottom: 10px; font-size: 16px;">📝 Teacher Assessment Test</h3>
             <form id="staffTestForm" onsubmit="evaluateStaffTest(event)">
                 <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">1. National song of India? (Vande Mataram / Jana Gana Mana)</label><input type="text" id="q1" required style="width:150px; padding:6px; margin-top:4px;"></div>
                 <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">2. 12 ka square (12 x 12)?</label><input type="number" id="q2" required style="width:150px; padding:6px; margin-top:4px;"></div>
                 <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">3. Firozabad kis cheez ke liye famous hai?</label><input type="text" id="q3" required style="width:150px; padding:6px; margin-top:4px;"></div>
                 <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">4. English alphabet me kitne letters?</label><input type="number" id="q4" required style="width:150px; padding:6px; margin-top:4px;"></div>
                 <div style="margin-bottom: 15px;"><label style="font-weight: bold; font-size: 13px;">5. Teaching method kaisa hona chahiye?</label><input type="text" id="q5" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <button type="submit" class="btn-submit" style="background:#16a34a; color:white;">📊 Submit Test & Register Admin</button>
+                <button type="submit" class="btn-submit" style="background:#16a34a; color:white;">📊 Submit Test & Check Salary</button>
             </form>
         </div>
 
         <div class="info-card">
-            <h3 style="color: #1e1b4b; margin-bottom: 10px; font-size: 16px;">📋 Registered Administrative Directory</h3>
+            <h3 style="color: #1e1b4b; margin-bottom: 10px; font-size: 16px;">📋 Registered Staff Directory</h3>
             <div class="data-table-container">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>S.R. / Admin ID</th>
-                            <th>Name</th>
+                            <th>Teacher Name</th>
                             <th>Father Name</th>
                             <th>Mobile</th>
                             <th>Qualification</th>
-                            <th>Username</th>
-                            <th>Password</th>
+                            <th>Salary (₹)</th>
                             <th>Documents</th>
                             <th>Action</th>
                         </tr>
@@ -683,68 +680,10 @@
                 const splash = document.getElementById('splash-screen');
                 if (splash) {
                     splash.style.opacity = '0';
-                    setTimeout(() => {
-                        splash.style.display = 'none';
-                        navigateTo('login-page');
-                    }, 800);
+                    setTimeout(() => splash.style.display = 'none', 800);
                 }
             }
         }, 1000);
-
-        let currentLoginRole = 'user';
-
-        function switchLoginRole(role) {
-            currentLoginRole = role;
-            const userBtn = document.getElementById('userTabBtn');
-            const adminBtn = document.getElementById('adminTabBtn');
-            const idLabel = document.getElementById('loginIdLabel');
-            const idInput = document.getElementById('loginIdInput');
-
-            if (role === 'user') {
-                userBtn.classList.add('active-tab');
-                adminBtn.classList.remove('active-tab');
-                idLabel.innerText = "Username (S.R. No.) *";
-                idInput.placeholder = "Enter Student S.R. No.";
-            } else {
-                adminBtn.classList.add('active-tab');
-                userBtn.classList.remove('active-tab');
-                idLabel.innerText = "Admin Username *";
-                idInput.placeholder = "Enter Admin Username";
-            }
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const idVal = document.getElementById('loginIdInput').value.trim();
-            const passVal = document.getElementById('loginPassInput').value.trim();
-
-            if (currentLoginRole === 'admin') {
-                let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-                let foundAdmin = staffList.find(stf => stf.username === idVal && stf.password === passVal);
-                
-                if ((idVal === 'admin' && passVal === 'admin123') || foundAdmin) {
-                    alert('Administrative Login Successful!');
-                    navigateTo('main-menu');
-                } else {
-                    alert('Invalid Administrative Credentials! Please check your username and password.');
-                }
-            } else {
-                let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-                let foundStudent = studentsList.find(s => s.username === idVal && s.password === passVal);
-
-                if (foundStudent || (idVal !== "" && passVal !== "")) {
-                    alert('User / Student Login Successful!');
-                    navigateTo('main-menu');
-                } else {
-                    alert('Invalid Student Username or Password! Please check your credentials.');
-                }
-            }
-        }
-
-        function logoutSession() {
-            document.getElementById('loginForm').reset();
-            navigateTo('login-page');
-        }
 
         function navigateTo(pageId) {
             document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
@@ -855,10 +794,6 @@
         function saveActiveStudent(event) {
             event.preventDefault();
             const selectedClass = document.getElementById('actClass').value;
-            const srNumber = document.getElementById('actSrNo').value.trim();
-            const autoUsername = srNumber; // SR Number hi username banega
-            const autoPassword = 'SSN@' + Math.floor(1000 + Math.random() * 9000); // Auto-generated password
-
             let yearlyFee = 4200, installmentPerQuarter = 1050;
             if (['Class 6', 'Class 7', 'Class 8'].includes(selectedClass)) { yearlyFee = 5400; installmentPerQuarter = 1350; }
             else if (['Class 9', 'Class 10'].includes(selectedClass)) { yearlyFee = 6600; installmentPerQuarter = 1650; }
@@ -866,9 +801,7 @@
             const newStudent = {
                 date: new Date().toISOString().split('T')[0],
                 admissionType: 'ACTIVE',
-                srNo: srNumber,
-                username: autoUsername,
-                password: autoPassword,
+                srNo: document.getElementById('actSrNo').value.trim(),
                 name: document.getElementById('actName').value.trim(),
                 fatherName: document.getElementById('actFather').value.trim(),
                 mobile: document.getElementById('actMobile').value.trim(),
@@ -887,9 +820,7 @@
             let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
             studentsList.push(newStudent);
             localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-            
-            alert(`Registration Successfully!\n\nPlease note your login credentials:\nUsername: ${autoUsername}\nPassword: ${autoPassword}`);
-            
+            alert('Student successfully active list me add ho gaya hai!');
             document.getElementById('activeStudentForm').reset();
             document.getElementById('actFeeDate').value = todayStr;
             toggleActiveStudentForm();
@@ -899,17 +830,12 @@
         function saveStudentData(event) {
             event.preventDefault();
             const selectedClass = document.getElementById('admClass').value;
-            const srNumber = document.getElementById('admSrNo').value.trim();
-            const autoUsername = srNumber;
-            const autoPassword = 'SSN@' + Math.floor(1000 + Math.random() * 9000);
             let installmentPerQuarter = parseFloat(document.getElementById('admInstallmentFee').value) || 1050;
 
             const newStudent = {
                 date: document.getElementById('admDate').value,
                 admissionType: 'NEW ADMISSION',
-                srNo: srNumber,
-                username: autoUsername,
-                password: autoPassword,
+                srNo: document.getElementById('admSrNo').value.trim(),
                 name: document.getElementById('admName').value.trim(),
                 fatherName: document.getElementById('admFather').value.trim(),
                 motherName: document.getElementById('admMother').value.trim(),
@@ -934,9 +860,7 @@
             let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
             studentsList.push(newStudent);
             localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-
-            alert(`Registration Successfully!\n\nPlease note your login credentials:\nUsername: ${autoUsername}\nPassword: ${autoPassword}`);
-
+            alert('New Student admission aur fees successfully save ho gaya hai!');
             document.getElementById('studentAdmissionForm').reset();
             navigateTo('active-students-page');
         }
@@ -971,6 +895,8 @@
 
         function payStudentFee(index) {
             updateFeeRowValues(index);
+            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
+            let s = studentsList[index];
             alert(`Fee successfully record ho gayi hai!`);
             renderFeeManagement();
         }
@@ -1019,7 +945,6 @@
                 const readerResume = new FileReader();
                 readerResume.onload = function(eResume) {
                     tempStaffData = {
-                        srNo: document.getElementById('stfSrNo').value.trim(),
                         name: document.getElementById('stfName').value.trim(),
                         fatherName: document.getElementById('stfFather').value.trim(),
                         mobile: document.getElementById('stfMobile').value.trim(),
@@ -1038,19 +963,11 @@
 
         function evaluateStaffTest(event) {
             event.preventDefault();
-            const autoUsername = tempStaffData.srNo; // Admin SR Number hi username banega
-            const autoPassword = 'ADM@' + Math.floor(1000 + Math.random() * 9000); // Auto password
-
-            tempStaffData.username = autoUsername;
-            tempStaffData.password = autoPassword;
             tempStaffData.salary = 2000;
-
             let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
             staffList.push(tempStaffData);
             localStorage.setItem('ssn_staff', JSON.stringify(staffList));
-
-            alert(`Registration Successfully!\n\nPlease note your Administrative login credentials:\nUsername: ${autoUsername}\nPassword: ${autoPassword}`);
-
+            alert('Teacher successfully registered!');
             document.getElementById('staffRegistrationForm').reset();
             document.getElementById('staffTestForm').reset();
             document.getElementById('staffTestContainer').style.display = 'none';
@@ -1062,13 +979,12 @@
             const tbody = document.getElementById('staffTableBody');
             tbody.innerHTML = "";
             let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-            if (staffList.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Koi administrative member registered nahi hai.</td></tr>`; return; }
+            if (staffList.length === 0) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Koi staff member registered nahi hai.</td></tr>`; return; }
             staffList.forEach((stf, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td><b>${stf.srNo || 'N/A'}</b></td><td><b>${stf.name}</b></td><td>${stf.fatherName}</td><td>${stf.mobile}</td><td>${stf.qualification}</td>
-                        <td><b style="color:#2563eb;">${stf.username || 'N/A'}</b></td><td><b style="color:#dc2626;">${stf.password || 'N/A'}</b></td>
-                        <td style="text-align:center;"><button class="btn-view-doc" onclick="viewStaffDocuments(${index})">👁 View</button></td>
+                        <td><b>${stf.name}</b></td><td>${stf.fatherName}</td><td>${stf.mobile}</td><td>${stf.qualification}</td><td><b>₹${stf.salary || 1500}</b></td>
+                        <td style="text-align:center;"><button class="btn-view-doc" onclick="viewStaffDocuments(${index})">👁 View Documents</button></td>
                         <td><button class="btn-delete" onclick="deleteStaff(${index})">🗑 Delete</button></td>
                     </tr>
                 `;
@@ -1081,14 +997,11 @@
             if (!stf) return;
             const docHtml = `
                 <div class="certificate-box" style="text-align: center;">
-                    <div class="cert-header"><h1>Saraswati Shishu Niketan J H School</h1><p>Administrative Document Verification Profile</p></div>
+                    <div class="cert-header"><h1>Saraswati Shishu Niketan J H School</h1><p>Staff Document Verification Profile</p></div>
                     <div class="cert-title"><span>${stf.name.toUpperCase()} - DOCUMENTS</span></div>
                     <div class="cert-body" style="text-align: left;">
-                        <p><strong>Admin ID / S.R.:</strong> <span class="cert-line">${stf.srNo}</span></p>
-                        <p><strong>Name:</strong> <span class="cert-line">${stf.name}</span></p>
+                        <p><strong>Teacher Name:</strong> <span class="cert-line">${stf.name}</span></p>
                         <p><strong>Qualification:</strong> <span class="cert-line">${stf.qualification}</span></p>
-                        <p><strong>Username:</strong> <span class="cert-line">${stf.username}</span></p>
-                        <p><strong>Password:</strong> <span class="cert-line">${stf.password}</span></p>
                         <br><div style="text-align:center;"><img src="${stf.photo}" alt="Staff Photo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #ffb703;"></div>
                     </div>
                 </div>
@@ -1119,6 +1032,7 @@
             if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Koi active student record nahi mila.</td></tr>`; return; }
 
             studentsList.forEach((s, index) => {
+                const docs = s.uploadedDocs || {};
                 tbody.innerHTML += `
                     <tr>
                         <td><b>${s.srNo || 'N/A'}</b></td><td><b>${s.name}</b></td><td>${s.fatherName}</td><td>${s.class}</td><td>${s.aadhar || 'N/A'}</td>
@@ -1181,6 +1095,7 @@
             });
         }
 
+        /* --- I-CARD DIRECTORY & DOWNLOAD LOGIC --- */
         function renderICardDirectory() {
             const tbody = document.getElementById('icardTableBody');
             tbody.innerHTML = "";

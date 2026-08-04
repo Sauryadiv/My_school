@@ -56,7 +56,6 @@
         .page-container.active { display: block; opacity: 1; }
         .top-action-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .back-btn { background: #ffb703; color: #1e1b4b; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .download-action-btn { background: #16a34a; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
         .app-header { background-color: #1e1b4b; color: white; padding: 18px; text-align: center; border-radius: 12px; margin-bottom: 20px; border-bottom: 4px solid #ffb703; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
         /* MENU GRID */
@@ -79,9 +78,6 @@
         .search-box-bar { margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
         .search-box-bar input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; }
 
-        .filter-box { display: flex; gap: 10px; margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
-        .filter-box select { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #94a3b8; font-weight: bold; color: #1e1b4b; }
-
         .btn-add-toggle { background: #ffb703; color: #1e1b4b; border: none; padding: 10px 20px; font-weight: bold; font-size: 15px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .btn-submit { width: 100%; background: #1e1b4b; color: #ffb703; border: none; padding: 12px; font-weight: bold; font-size: 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
 
@@ -91,82 +87,7 @@
         .data-table td { padding: 8px 10px; border: 1px solid #cbd5e1; color: #1e293b; vertical-align: middle; }
         .data-table tr:nth-child(even) { background-color: #f8fafc; }
 
-        .btn-tc { background: #d97706; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; width: 100%; }
         .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .btn-pay { background: #16a34a; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 4px; width: 100%; }
-        .btn-fee-receipt { background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; width: 100%; }
-        .btn-view-doc { background: #7c3aed; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; width: 100%; }
-        .btn-generate-icard { background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; width: 100%; }
-
-        .table-select { padding: 4px; border-radius: 4px; font-size: 11px; border: 1px solid #aaa; margin-bottom: 4px; width: 100%; }
-        .table-input-fee { width: 75px; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; }
-        .img-preview-thumb { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #ccc; }
-
-        /* --- 4. I-CARD STYLES (PHOTO ON LEFT, PRINCIPAL AUTHORITY) --- */
-        .icard-single-box {
-            width: 320px; background: #fff; border-radius: 12px; overflow: hidden;
-            border: 3px solid #1e1b4b; box-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0 auto 20px auto;
-            position: relative; display: flex; flex-direction: column;
-        }
-        .icard-header { background: #1e1b4b; color: #ffb703; width: 100%; padding: 10px; text-align: center; border-bottom: 3px solid #ffb703; }
-        .icard-header h4 { font-size: 13px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
-        .icard-header p { font-size: 9px; color: #fff; margin-top: 2px; }
-        
-        .icard-content-row { display: flex; padding: 12px; align-items: center; gap: 12px; }
-        .icard-photo-wrap { width: 85px; height: 95px; border-radius: 6px; border: 2px solid #ffb703; overflow: hidden; background: #f0f0f0; flex-shrink: 0; }
-        .icard-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .icard-details { flex: 1; font-size: 11.5px; text-align: left; }
-        .icard-field { margin-bottom: 3px; display: flex; font-size: 11px; }
-        .icard-field strong { width: 68px; color: #1e1b4b; flex-shrink: 0; }
-        .icard-field span { color: #333; font-weight: 600; word-break: break-word; }
-
-        .icard-footer { background: #f8fafc; border-top: 1px solid #cbd5e1; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
-        .sig-box { text-align: center; font-size: 9px; font-weight: bold; color: #1e1b4b; }
-
-        /* BUTTON WRAPPER FOR I-CARD VIEW PAGE */
-        .icard-action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-        .icard-action-buttons button {
-            flex: 1;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-        .btn-download-icard { background: #16a34a; color: white; }
-        .btn-back-icard { background: #ffb703; color: #1e1b4b; }
-
-        /* --- 5. TC & CERTIFICATE STYLES --- */
-        .certificate-box {
-            background: #ffffff; border: 6px double #1e1b4b; border-radius: 8px;
-            padding: 30px; max-width: 750px; margin: 0 auto; color: #1e1b4b;
-            position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .cert-header { text-align: center; border-bottom: 2px solid #ffb703; padding-bottom: 10px; margin-bottom: 20px; }
-        .cert-header h1 { font-size: 22px; color: #1e1b4b; text-transform: uppercase; }
-        .cert-header p { font-size: 12px; color: #555; }
-        .cert-title { text-align: center; margin: 15px 0; }
-        .cert-title span { background: #1e1b4b; color: #ffb703; padding: 5px 20px; border-radius: 4px; font-size: 16px; font-weight: bold; letter-spacing: 1px; }
-        .cert-body { margin-top: 25px; line-height: 2; font-size: 14px; text-align: justify; }
-        .cert-line { border-bottom: 1px dashed #1e1b4b; font-weight: bold; padding: 0 8px; color: #000; }
-        .cert-footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 10px; }
-        .cert-sig-line { text-align: center; font-weight: bold; font-size: 12px; border-top: 1px solid #1e1b4b; width: 160px; padding-top: 5px; }
-
-        @media print {
-            body { background: white; }
-            .top-action-bar, #splash-screen, .app-header, .filter-box, .search-box-bar, .icard-action-buttons { display: none !important; }
-            .page-container { display: block !important; opacity: 1 !important; padding: 0 !important; }
-            .icard-single-box { border: 3px solid #000; box-shadow: none; margin: 0 auto; width: 100%; max-width: 320px; page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        }
     </style>
 </head>
 <body>
@@ -199,57 +120,15 @@
         </div>
 
         <div class="menu-grid">
-            <div class="menu-card" onclick="navigateTo('students-main-page')">
+            <div class="menu-card" onclick="navigateTo('active-students-page')">
                 <div class="icon">👨‍🎓</div>
-                <h3>Student</h3>
-                <p>Active Students & List</p>
+                <h3>Active Students</h3>
+                <p>Manage Active Students Directory</p>
             </div>
-            <div class="menu-card" onclick="navigateTo('admission-form-page')">
+            <div class="menu-card" onclick="alert('Coming soon!')">
                 <div class="icon">📝</div>
                 <h3>New Admission</h3>
                 <p>Register New Student</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('fee-page')">
-                <div class="icon">💰</div>
-                <h3>Fee Management</h3>
-                <p>Track & Collect Fees</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('staff-page')">
-                <div class="icon">👨‍🏫</div>
-                <h3>Staff</h3>
-                <p>Teachers & Staff Directory</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('attendance-page')">
-                <div class="icon">📅</div>
-                <h3>Attendance</h3>
-                <p>Mark Daily Attendance</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('icard-page')">
-                <div class="icon">🪪</div>
-                <h3>I-Card</h3>
-                <p>Generate Student ID Cards</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- STUDENT SUB-MENU PAGE -->
-    <div id="students-main-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Student Section</h2>
-        </div>
-        <div class="vertical-menu-stack">
-            <div class="menu-card" onclick="navigateTo('active-students-page')">
-                <div class="icon">🟢</div>
-                <h3>Active Student</h3>
-                <p>Manage Active Students Directory</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('students-list-page')">
-                <div class="icon">📋</div>
-                <h3>Students List</h3>
-                <p>Class-wise Student Directory</p>
             </div>
         </div>
     </div>
@@ -257,7 +136,7 @@
     <!-- ACTIVE STUDENTS PAGE -->
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('students-main-page')">⬅ Back to Student Section</button>
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
             <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Add Student</button>
         </div>
         <div class="app-header">
@@ -265,7 +144,7 @@
         </div>
 
         <div class="search-box-bar">
-            <input type="text" id="activeStudentSearch" placeholder="🔍 Search student by Name, S.R. Number or Aadhaar Number..." oninput="renderActiveStudents()">
+            <input type="text" id="activeStudentSearch" placeholder="🔍 Search student by Name or Roll Number..." oninput="renderActiveStudents()">
         </div>
 
         <div id="activeStudentFormContainer" class="form-card" style="display:none;">
@@ -316,10 +195,6 @@
                         <label>Fee Deposit Date *</label>
                         <input type="date" id="actFeeDate" required>
                     </div>
-                    <div class="form-group">
-                        <label>Old / Due Fee (₹) [Optional]</label>
-                        <input type="number" id="actOldFee" value="0" placeholder="Purani baki fee">
-                    </div>
                 </div>
                 <button type="submit" class="btn-submit">💾 Save Student</button>
             </form>
@@ -334,825 +209,126 @@
                             <th>Student Name</th>
                             <th>Father Name</th>
                             <th>Class</th>
-                            <th>Aadhaar Number</th>
-                            <th>TC Certificate</th>
-                            <th>Upload Documents</th>
-                            <th>Student Photo</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activeStudentsTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- TC CERTIFICATE VIEW PAGE -->
-    <div id="tc-view-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('active-students-page')">⬅ Back to Directory</button>
-            <button class="download-action-btn" onclick="window.print()">🖨 Print TC</button>
-        </div>
-        <div id="tcCertificateDisplay"></div>
-    </div>
-
-    <!-- FEE RECEIPT VIEW PAGE -->
-    <div id="fee-receipt-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('fee-page')">⬅ Back to Fee Management</button>
-            <button class="download-action-btn" onclick="window.print()">🖨 Print Receipt</button>
-        </div>
-        <div id="feeReceiptDisplay"></div>
-    </div>
-
-    <!-- DOCUMENT VIEW PAGE -->
-    <div id="doc-view-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('staff-page')">⬅ Back to Staff Page</button>
-            <button class="download-action-btn" onclick="window.print()">🖨 Print Document</button>
-        </div>
-        <div id="docDisplayContent"></div>
-    </div>
-
-    <!-- I-CARD VIEW & DOWNLOAD PAGE (DOWNLOAD BUTTON & BACK BUTTON AT BOTTOM) -->
-    <div id="icard-view-page" class="page-container">
-        <div class="app-header">
-            <h2>Student Identity Card</h2>
-        </div>
-        
-        <!-- ID Card Display Area -->
-        <div id="icardSingleDisplay"></div>
-
-        <!-- Buttons Below I-Card: Download I-Card & Back Button -->
-        <div class="icard-action-buttons">
-            <button class="btn-back-icard" onclick="navigateTo('icard-page')">⬅ Back</button>
-            <button class="btn-download-icard" onclick="downloadICardPDF()">📥 Download I-Card</button>
-        </div>
-    </div>
-
-    <!-- STUDENTS LIST PAGE -->
-    <div id="students-list-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('students-main-page')">⬅ Back to Student Section</button>
-            <button class="download-action-btn" onclick="window.print()">🖨 Print List</button>
-        </div>
-        <div class="app-header">
-            <h2>Class-Wise Student List</h2>
-        </div>
-        <div class="info-card">
-            <div class="filter-box">
-                <select id="classListFilter" onchange="renderClassWiseStudents()">
-                    <option value="Play Way">Play Way</option>
-                    <option value="Nursery">Nursery</option>
-                    <option value="LKG">LKG</option>
-                    <option value="UKG">UKG</option>
-                    <option value="Class 1">Class 1</option>
-                    <option value="Class 2">Class 2</option>
-                    <option value="Class 3">Class 3</option>
-                    <option value="Class 4">Class 4</option>
-                    <option value="Class 5">Class 5</option>
-                    <option value="Class 6">Class 6</option>
-                    <option value="Class 7">Class 7</option>
-                    <option value="Class 8">Class 8</option>
-                    <option value="Class 9">Class 9</option>
-                    <option value="Class 10">Class 10</option>
-                </select>
-            </div>
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll Number</th>
-                            <th>Student Name</th>
-                            <th>Father Name</th>
-                            <th>Mobile Number</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allStudentsTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW ADMISSION FORM PAGE -->
-    <div id="admission-form-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>New Student Admission & Fee Form</h2>
-        </div>
-        <div class="form-card">
-            <form id="studentAdmissionForm" onsubmit="saveStudentData(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Admission Date *</label>
-                        <input type="date" id="admDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Roll No. / S.R. No. *</label>
-                        <input type="text" id="admSrNo" required placeholder="Enter Roll/S.R. Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Student Full Name *</label>
-                        <input type="text" id="admName" required placeholder="Enter student name">
-                    </div>
-                    <div class="form-group">
-                        <label>Father's Name *</label>
-                        <input type="text" id="admFather" required placeholder="Enter father's name">
-                    </div>
-                    <div class="form-group">
-                        <label>Mother's Name *</label>
-                        <input type="text" id="admMother" required placeholder="Enter mother's name">
-                    </div>
-                    <div class="form-group">
-                        <label>Date of Birth (DOB) *</label>
-                        <input type="date" id="admDob" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Gender *</label>
-                        <select id="admGender" required>
-                            <option value="">-- Select Gender --</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Class *</label>
-                        <select id="admClass" required onchange="updateClassFees()">
-                            <option value="">-- Choose Class --</option>
-                            <option value="Play Way">Play Way</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="LKG">LKG</option>
-                            <option value="UKG">UKG</option>
-                            <option value="Class 1">Class 1</option>
-                            <option value="Class 2">Class 2</option>
-                            <option value="Class 3">Class 3</option>
-                            <option value="Class 4">Class 4</option>
-                            <option value="Class 5">Class 5</option>
-                            <option value="Class 6">Class 6</option>
-                            <option value="Class 7">Class 7</option>
-                            <option value="Class 8">Class 8</option>
-                            <option value="Class 9">Class 9</option>
-                            <option value="Class 10">Class 10</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile Number *</label>
-                        <input type="tel" id="admMobile" maxlength="10" required placeholder="10-digit mobile number">
-                    </div>
-                    <div class="form-group">
-                        <label>Aadhaar Number *</label>
-                        <input type="text" id="admAadhar" maxlength="12" required placeholder="12-digit Aadhaar number">
-                    </div>
-                    <div class="form-group"><label>Admission Fees (₹)</label><input type="number" id="admAdmissionFee" value="200" readonly></div>
-                    <div class="form-group"><label>Uniform Fee (₹)</label><input type="number" id="admUniformFee" value="1000" readonly></div>
-                    <div class="form-group"><label>I-Card & Diary Fee (₹)</label><input type="number" id="admIcardDiaryFee" value="100" readonly></div>
-                    <div class="form-group"><label>Installment Fee (₹)</label><input type="number" id="admInstallmentFee" value="1050" readonly></div>
-                    <div class="form-group"><label>Total Yearly Fee (₹)</label><input type="number" id="admAnnualFee" value="4200" readonly></div>
-                    <div class="form-group"><label>Initial Required Amount (₹)</label><input type="number" id="admInitialRequired" value="2350" readonly style="background-color: #dbeafe; font-weight: bold; color: #1e40af;"></div>
-                    <div class="form-group"><label>Deposit / Paid Fee (₹) *</label><input type="number" id="admPaidFee" value="0" required oninput="calculateDueFee()"></div>
-                    <div class="form-group"><label>Fee Deposit Date *</label><input type="date" id="admFeeDate" required></div>
-                    <div class="form-group"><label>Remaining Due Fee (₹)</label><input type="number" id="admDueFee" value="0" readonly style="background-color: #fee2e2; font-weight: bold; color: #991b1b;"></div>
-                    <div class="form-group"><label>Old / Due Fee (₹) [Optional]</label><input type="number" id="admOldFee" value="0" oninput="calculateDueFee()"></div>
-                </div>
-                <button type="submit" class="btn-submit">💾 Save New Student Admission</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- FEE MANAGEMENT PAGE -->
-    <div id="fee-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Fee Management Dashboard</h2>
-        </div>
-        <div class="info-card">
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Class</th>
-                            <th>Pichli Due Fee (₹)</th>
-                            <th>Total Fees (₹)</th>
-                            <th>1st Inst</th>
-                            <th>2nd Inst</th>
-                            <th>3rd Inst</th>
-                            <th>4th Inst</th>
-                            <th>Deposit (₹)</th>
-                            <th>Date</th>
-                            <th>Due (₹)</th>
-                            <th>Action & Receipt</th>
-                        </tr>
-                    </thead>
-                    <tbody id="feeTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- STAFF MANAGEMENT PAGE -->
-    <div id="staff-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-            <button class="btn-add-toggle" onclick="toggleStaffForm()">➕ Add Staff</button>
-        </div>
-        <div class="app-header">
-            <h2>Staff Management Dashboard</h2>
-        </div>
-        <div id="activeStaffFormContainer" class="form-card" style="display:none;">
-            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Teacher / Staff Registration Form</h3>
-            <form id="staffRegistrationForm" onsubmit="submitStaffDetails(event)">
-                <div class="form-grid">
-                    <div class="form-group"><label>Teacher Name *</label><input type="text" id="stfName" required></div>
-                    <div class="form-group"><label>Father Name *</label><input type="text" id="stfFather" required></div>
-                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="stfMobile" maxlength="10" required></div>
-                    <div class="form-group"><label>Qualification *</label><input type="text" id="stfQual" required></div>
-                    <div class="form-group"><label>Upload Resume *</label><input type="file" id="stfResume" accept=".pdf,.doc,.docx" required></div>
-                    <div class="form-group"><label>Upload Photo *</label><input type="file" id="stfPhoto" accept="image/*" required></div>
-                </div>
-                <button type="submit" class="btn-submit">🚀 Submit & Take Test</button>
-            </form>
-        </div>
-
-        <div id="staffTestContainer" class="form-card" style="display:none; border-top: 4px solid #16a34a;">
-            <h3 style="color: #16a34a; margin-bottom: 10px; font-size: 16px;">📝 Teacher Assessment Test</h3>
-            <form id="staffTestForm" onsubmit="evaluateStaffTest(event)">
-                <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">1. National song of India? (Vande Mataram / Jana Gana Mana)</label><input type="text" id="q1" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">2. 12 ka square (12 x 12)?</label><input type="number" id="q2" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">3. Firozabad kis cheez ke liye famous hai?</label><input type="text" id="q3" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <div style="margin-bottom: 12px;"><label style="font-weight: bold; font-size: 13px;">4. English alphabet me kitne letters?</label><input type="number" id="q4" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <div style="margin-bottom: 15px;"><label style="font-weight: bold; font-size: 13px;">5. Teaching method kaisa hona chahiye?</label><input type="text" id="q5" required style="width:150px; padding:6px; margin-top:4px;"></div>
-                <button type="submit" class="btn-submit" style="background:#16a34a; color:white;">📊 Submit Test & Check Salary</button>
-            </form>
-        </div>
-
-        <div class="info-card">
-            <h3 style="color: #1e1b4b; margin-bottom: 10px; font-size: 16px;">📋 Registered Staff Directory</h3>
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Teacher Name</th>
-                            <th>Father Name</th>
                             <th>Mobile</th>
-                            <th>Qualification</th>
-                            <th>Salary (₹)</th>
-                            <th>Documents</th>
+                            <th>Aadhaar</th>
+                            <th>Fee Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="staffTableBody"></tbody>
+                    <tbody id="activeStudentsTableBody">
+                        <!-- Data dynamically load hoga -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- ATTENDANCE PAGE -->
-    <div id="attendance-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Daily Student Attendance</h2>
-        </div>
-        <div class="info-card">
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Roll / S.R.</th><th>Student Name</th><th>Class</th><th>Attendance Today</th></tr>
-                    </thead>
-                    <tbody id="attendanceTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- I-CARD DIRECTORY PAGE -->
-    <div id="icard-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Student Identity Card Directory</h2>
-        </div>
-        <div class="info-card">
-            <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Students ki list me se **"Generate I-Card"** button par click karke ID card generate karein.</p>
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R. No.</th>
-                            <th>Student Name</th>
-                            <th>Father Name</th>
-                            <th>Class</th>
-                            <th>Mobile Number</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="icardTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC FOR DATA SAVING -->
     <script>
-        const todayStr = new Date().toISOString().split('T')[0];
-        document.getElementById('admDate').value = todayStr;
-        document.getElementById('admFeeDate').value = todayStr;
-        document.getElementById('actFeeDate').value = todayStr;
-
+        // Splash Screen Timer
         let timeLeft = 5;
-        const countdownElement = document.getElementById('countdown');
-
-        const timerInterval = setInterval(() => {
+        const countdownTimer = setInterval(() => {
             timeLeft--;
-            if (timeLeft > 0) {
-                countdownElement.innerText = `Opening App in ${timeLeft}s...`;
-            } else {
-                clearInterval(timerInterval);
-                const splash = document.getElementById('splash-screen');
-                if (splash) {
-                    splash.style.opacity = '0';
-                    setTimeout(() => splash.style.display = 'none', 800);
-                }
+            document.getElementById("countdown").innerText = `Opening App in ${timeLeft}s...`;
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("splash-screen").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("splash-screen").style.visibility = "hidden";
+                }, 800);
             }
         }, 1000);
 
+        // Page Navigation Function
         function navigateTo(pageId) {
-            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.add('active');
-                if (pageId === 'active-students-page') renderActiveStudents();
-                if (pageId === 'students-list-page') renderClassWiseStudents();
-                if (pageId === 'fee-page') renderFeeManagement();
-                if (pageId === 'staff-page') renderStaffManagement();
-                if (pageId === 'attendance-page') renderAttendance();
-                if (pageId === 'icard-page') renderICardDirectory();
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+            if(pageId === 'active-students-page') {
+                renderActiveStudents();
             }
         }
 
-        function updateClassFees() {
-            const selectedClass = document.getElementById('admClass').value;
-            let uniformFee = 1000, installmentFee = 1050, yearlyFee = 4200, admissionFee = 200, icardFee = 100;
-
-            if (['Class 6', 'Class 7', 'Class 8'].includes(selectedClass)) {
-                uniformFee = 1200; installmentFee = 1350; yearlyFee = 5400;
-            } else if (['Class 9', 'Class 10'].includes(selectedClass)) {
-                uniformFee = 700; installmentFee = 1650; yearlyFee = 6600;
-            }
-
-            document.getElementById('admAdmissionFee').value = admissionFee;
-            document.getElementById('admUniformFee').value = uniformFee;
-            document.getElementById('admIcardDiaryFee').value = icardFee;
-            document.getElementById('admInstallmentFee').value = installmentFee;
-            document.getElementById('admAnnualFee').value = yearlyFee;
-            document.getElementById('admInitialRequired').value = admissionFee + uniformFee + installmentFee + icardFee;
-
-            calculateDueFee();
-        }
-
-        function calculateDueFee() {
-            const yearlyFee = parseFloat(document.getElementById('admAnnualFee').value) || 0;
-            const admissionFee = parseFloat(document.getElementById('admAdmissionFee').value) || 0;
-            const uniformFee = parseFloat(document.getElementById('admUniformFee').value) || 0;
-            const icardFee = parseFloat(document.getElementById('admIcardDiaryFee').value) || 0;
-            const oldFee = parseFloat(document.getElementById('admOldFee').value) || 0;
-            const totalPayable = yearlyFee + admissionFee + uniformFee + icardFee + oldFee;
-            const paidFee = parseFloat(document.getElementById('admPaidFee').value) || 0;
-            const dueFee = totalPayable - paidFee;
-            document.getElementById('admDueFee').value = dueFee >= 0 ? dueFee : 0;
-        }
-
+        // Toggle Form Visibility
         function toggleActiveStudentForm() {
             const formContainer = document.getElementById('activeStudentFormContainer');
-            formContainer.style.display = formContainer.style.display === 'block' ? 'none' : 'block';
+            formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
         }
 
-        function uploadTableDoc(event, index) {
-            const selectBox = document.getElementById(`docType_${index}`);
-            const docCategory = selectBox.value;
-            const file = event.target.files[0];
-            if (!file) return;
-
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            if(!studentsList[index].uploadedDocs) studentsList[index].uploadedDocs = {};
-            studentsList[index].uploadedDocs[docCategory] = file.name;
-            localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-            alert(`[${docCategory}] - "${file.name}" successfully upload ho gaya hai!`);
-            renderActiveStudents();
-        }
-
-        function uploadStudentPhoto(event, index) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-                studentsList[index].photo = e.target.result;
-                localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-                alert('Student photo successfully update ho gayi hai!');
-                renderActiveStudents();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function generateTC(index) {
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            const student = studentsList[index];
-            if (!student) return;
-            studentsList[index].tcStatus = 'Issued';
-            localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-            const today = new Date().toLocaleDateString('en-IN');
-
-            const tcHtml = `
-                <div class="certificate-box">
-                    <div class="cert-header"><h1>Saraswati Shishu Niketan J H School</h1><p>Near Achal Palace, Sector 2, Suhag Nagar, Firozabad (U.P.)</p></div>
-                    <div class="cert-title"><span>TRANSFER CERTIFICATE (TC)</span></div>
-                    <div class="cert-body">
-                        <p>This is to certify that 🎓 <span class="cert-line">${student.name.toUpperCase()}</span>,</p>
-                        <p>Son / Daughter of Shri <span class="cert-line">${student.fatherName.toUpperCase()}</span>,</p>
-                        <p>Roll / S.R. No.: <span class="cert-line">${student.srNo || 'N/A'}</span> &nbsp;|&nbsp; Class: <span class="cert-line">${student.class}</span>,</p>
-                        <p>was a bonafide student of this institution. All school dues have been cleared up to date.</p>
-                        <p>His / Her character and conduct during the stay in school have been <span class="cert-line">GOOD</span>.</p>
-                        <p>Date of Issue: <span class="cert-line">${today}</span></p>
-                    </div>
-                    <div class="cert-footer"><div class="cert-sig-line">Class Teacher Sign</div><div class="cert-sig-line">Principal Sign & Stamp</div></div>
-                </div>
-            `;
-            document.getElementById('tcCertificateDisplay').innerHTML = tcHtml;
-            navigateTo('tc-view-page');
-        }
-
+        // Save Student Data to LocalStorage
         function saveActiveStudent(event) {
             event.preventDefault();
-            const selectedClass = document.getElementById('actClass').value;
-            let yearlyFee = 4200, installmentPerQuarter = 1050;
-            if (['Class 6', 'Class 7', 'Class 8'].includes(selectedClass)) { yearlyFee = 5400; installmentPerQuarter = 1350; }
-            else if (['Class 9', 'Class 10'].includes(selectedClass)) { yearlyFee = 6600; installmentPerQuarter = 1650; }
 
             const newStudent = {
-                date: new Date().toISOString().split('T')[0],
-                admissionType: 'ACTIVE',
-                srNo: document.getElementById('actSrNo').value.trim(),
-                name: document.getElementById('actName').value.trim(),
-                fatherName: document.getElementById('actFather').value.trim(),
-                mobile: document.getElementById('actMobile').value.trim(),
-                class: selectedClass,
-                aadhar: document.getElementById('actAadhar').value.trim(),
-                feeDepositDate: document.getElementById('actFeeDate').value || todayStr,
-                tcStatus: 'Active / No TC',
-                photo: 'https://via.placeholder.com/150',
-                uploadedDocs: {},
-                annualFee: yearlyFee,
-                oldFee: document.getElementById('actOldFee').value || '0',
-                inst1: installmentPerQuarter, inst2: installmentPerQuarter, inst3: installmentPerQuarter, inst4: installmentPerQuarter,
-                paidFee: '0'
+                id: Date.now(),
+                srNo: document.getElementById('actSrNo').value,
+                name: document.getElementById('actName').value,
+                father: document.getElementById('actFather').value,
+                mobile: document.getElementById('actMobile').value,
+                className: document.getElementById('actClass').value,
+                aadhar: document.getElementById('actAadhar').value,
+                feeDate: document.getElementById('actFeeDate').value
             };
 
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            studentsList.push(newStudent);
-            localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-            alert('Student successfully active list me add ho gaya hai!');
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            students.push(newStudent);
+            localStorage.setItem('saraswati_students', JSON.stringify(students));
+
+            alert('Student saved successfully!');
             document.getElementById('activeStudentForm').reset();
-            document.getElementById('actFeeDate').value = todayStr;
-            toggleActiveStudentForm();
+            document.getElementById('activeStudentFormContainer').style.display = 'none';
             renderActiveStudents();
         }
 
-        function saveStudentData(event) {
-            event.preventDefault();
-            const selectedClass = document.getElementById('admClass').value;
-            let installmentPerQuarter = parseFloat(document.getElementById('admInstallmentFee').value) || 1050;
+        // Render Students in Table
+        function renderActiveStudents() {
+            const tbody = document.getElementById('activeStudentsTableBody');
+            const searchQuery = document.getElementById('activeStudentSearch').value.toLowerCase();
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
 
-            const newStudent = {
-                date: document.getElementById('admDate').value,
-                admissionType: 'NEW ADMISSION',
-                srNo: document.getElementById('admSrNo').value.trim(),
-                name: document.getElementById('admName').value.trim(),
-                fatherName: document.getElementById('admFather').value.trim(),
-                motherName: document.getElementById('admMother').value.trim(),
-                dob: document.getElementById('admDob').value,
-                gender: document.getElementById('admGender').value,
-                class: selectedClass,
-                mobile: document.getElementById('admMobile').value.trim(),
-                aadhar: document.getElementById('admAadhar').value.trim(),
-                tcStatus: 'Active / No TC',
-                annualFee: document.getElementById('admAnnualFee').value,
-                admissionFee: document.getElementById('admAdmissionFee').value,
-                uniformFee: document.getElementById('admUniformFee').value,
-                icardDiaryFee: document.getElementById('admIcardDiaryFee').value,
-                oldFee: document.getElementById('admOldFee').value || "0",
-                inst1: installmentPerQuarter, inst2: installmentPerQuarter, inst3: installmentPerQuarter, inst4: installmentPerQuarter,
-                paidFee: document.getElementById('admPaidFee').value || "0",
-                feeDepositDate: document.getElementById('admFeeDate').value || todayStr,
-                photo: 'https://via.placeholder.com/150',
-                uploadedDocs: {}
-            };
+            tbody.innerHTML = '';
 
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            studentsList.push(newStudent);
-            localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-            alert('New Student admission aur fees successfully save ho gaya hai!');
-            document.getElementById('studentAdmissionForm').reset();
-            navigateTo('active-students-page');
+            const filteredStudents = students.filter(s => 
+                s.name.toLowerCase().includes(searchQuery) || 
+                s.srNo.toLowerCase().includes(searchQuery)
+            );
+
+            if (filteredStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`;
+                return;
+            }
+
+            filteredStudents.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.srNo}</td>
+                    <td><b>${student.name}</b></td>
+                    <td>${student.father}</td>
+                    <td>${student.className}</td>
+                    <td>${student.mobile}</td>
+                    <td>${student.aadhar}</td>
+                    <td>${student.feeDate}</td>
+                    <td><button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
-        function deleteActiveStudent(index) {
-            if(confirm("Kya aap is student ko delete karna chahte hain?")) {
-                let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-                studentsList.splice(index, 1);
-                localStorage.setItem('ssn_students', JSON.stringify(studentsList));
+        // Delete Student Data
+        function deleteStudent(id) {
+            if(confirm('Are you sure you want to delete this student?')) {
+                let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+                students = students.filter(s => s.id !== id);
+                localStorage.setItem('saraswati_students', JSON.stringify(students));
                 renderActiveStudents();
             }
         }
 
-        function updateFeeRowValues(index) {
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            studentsList[index].oldFee = document.getElementById(`oldFee_${index}`).value;
-            studentsList[index].inst1 = document.getElementById(`inst1_${index}`).value;
-            studentsList[index].inst2 = document.getElementById(`inst2_${index}`).value;
-            studentsList[index].inst3 = document.getElementById(`inst3_${index}`).value;
-            studentsList[index].inst4 = document.getElementById(`inst4_${index}`).value;
-            studentsList[index].paidFee = document.getElementById(`paidFee_${index}`).value;
-            studentsList[index].feeDepositDate = document.getElementById(`feeDate_${index}`).value;
-            
-            let s = studentsList[index];
-            const totalFee = parseFloat(s.annualFee || 4200) + parseFloat(s.admissionFee || 200) + parseFloat(s.uniformFee || 1000) + parseFloat(s.icardDiaryFee || 100) + parseFloat(s.oldFee || 0);
-            const currentDue = totalFee - parseFloat(s.paidFee || 0);
-            
-            const dueCell = document.getElementById(`currentDueDisplay_${index}`);
-            if(dueCell) dueCell.innerText = `₹${currentDue >= 0 ? currentDue : 0}`;
-            localStorage.setItem('ssn_students', JSON.stringify(studentsList));
-        }
-
-        function payStudentFee(index) {
-            updateFeeRowValues(index);
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            let s = studentsList[index];
-            alert(`Fee successfully record ho gayi hai!`);
-            renderFeeManagement();
-        }
-
-        function generateFeeReceipt(index) {
-            updateFeeRowValues(index);
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            let s = studentsList[index];
-
-            const receiptHtml = `
-                <div class="certificate-box">
-                    <div class="cert-header"><h1>Saraswati Shishu Niketan J H School</h1><p>Near Achal Palace, Sector 2, Suhag Nagar, Firozabad (U.P.)</p></div>
-                    <div class="cert-title"><span>FEE DEPOSIT RECEIPT</span></div>
-                    <div class="cert-body">
-                        <p>Receipt Date: <span class="cert-line">${s.feeDepositDate || todayStr}</span></p>
-                        <p>Roll / S.R. No.: <span class="cert-line">${s.srNo || 'N/A'}</span> &nbsp;|&nbsp; Student Name: <span class="cert-line">${s.name.toUpperCase()}</span></p>
-                        <p>Father's Name: <span class="cert-line">${s.fatherName.toUpperCase()}</span> &nbsp;|&nbsp; Class: <span class="cert-line">${s.class}</span></p>
-                        <br>
-                        <table style="width:100%; border-collapse: collapse; margin-top: 10px; font-size: 13px;">
-                            <tr style="background:#1e1b4b; color:#ffb703;"><th style="padding:8px; border:1px solid #1e1b4b;">Fee Component</th><th style="padding:8px; border:1px solid #1e1b4b; text-align:right;">Amount (₹)</th></tr>
-                            <tr><td style="padding:8px; border:1px solid #cbd5e1;">Total Deposit Paid Amount</td><td style="padding:8px; border:1px solid #cbd5e1; text-align:right; color:green;">₹${s.paidFee || 0}</td></tr>
-                        </table>
-                    </div>
-                    <div class="cert-footer"><div class="cert-sig-line">Depositor Sign</div><div class="cert-sig-line">Authorized Sign & Stamp</div></div>
-                </div>
-            `;
-            document.getElementById('feeReceiptDisplay').innerHTML = receiptHtml;
-            navigateTo('fee-receipt-page');
-        }
-
-        let tempStaffData = null;
-        function toggleStaffForm() {
-            const formContainer = document.getElementById('activeStaffFormContainer');
-            document.getElementById('staffTestContainer').style.display = 'none';
-            formContainer.style.display = formContainer.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function submitStaffDetails(event) {
-            event.preventDefault();
-            const resumeInput = document.getElementById('stfResume').files[0];
-            const photoInput = document.getElementById('stfPhoto').files[0];
-            if (!resumeInput || !photoInput) return alert("Please upload both resume and photo!");
-
-            const readerPhoto = new FileReader();
-            readerPhoto.onload = function(ePhoto) {
-                const readerResume = new FileReader();
-                readerResume.onload = function(eResume) {
-                    tempStaffData = {
-                        name: document.getElementById('stfName').value.trim(),
-                        fatherName: document.getElementById('stfFather').value.trim(),
-                        mobile: document.getElementById('stfMobile').value.trim(),
-                        qualification: document.getElementById('stfQual').value.trim(),
-                        photo: ePhoto.target.result,
-                        resumeName: resumeInput.name,
-                        resumeData: eResume.target.result
-                    };
-                    document.getElementById('activeStaffFormContainer').style.display = 'none';
-                    document.getElementById('staffTestContainer').style.display = 'block';
-                };
-                readerResume.readAsDataURL(resumeInput);
-            };
-            readerPhoto.readAsDataURL(photoInput);
-        }
-
-        function evaluateStaffTest(event) {
-            event.preventDefault();
-            tempStaffData.salary = 2000;
-            let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-            staffList.push(tempStaffData);
-            localStorage.setItem('ssn_staff', JSON.stringify(staffList));
-            alert('Teacher successfully registered!');
-            document.getElementById('staffRegistrationForm').reset();
-            document.getElementById('staffTestForm').reset();
-            document.getElementById('staffTestContainer').style.display = 'none';
-            renderStaffManagement();
-            tempStaffData = null;
-        }
-
-        function renderStaffManagement() {
-            const tbody = document.getElementById('staffTableBody');
-            tbody.innerHTML = "";
-            let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-            if (staffList.length === 0) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Koi staff member registered nahi hai.</td></tr>`; return; }
-            staffList.forEach((stf, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${stf.name}</b></td><td>${stf.fatherName}</td><td>${stf.mobile}</td><td>${stf.qualification}</td><td><b>₹${stf.salary || 1500}</b></td>
-                        <td style="text-align:center;"><button class="btn-view-doc" onclick="viewStaffDocuments(${index})">👁 View Documents</button></td>
-                        <td><button class="btn-delete" onclick="deleteStaff(${index})">🗑 Delete</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function viewStaffDocuments(index) {
-            let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-            let stf = staffList[index];
-            if (!stf) return;
-            const docHtml = `
-                <div class="certificate-box" style="text-align: center;">
-                    <div class="cert-header"><h1>Saraswati Shishu Niketan J H School</h1><p>Staff Document Verification Profile</p></div>
-                    <div class="cert-title"><span>${stf.name.toUpperCase()} - DOCUMENTS</span></div>
-                    <div class="cert-body" style="text-align: left;">
-                        <p><strong>Teacher Name:</strong> <span class="cert-line">${stf.name}</span></p>
-                        <p><strong>Qualification:</strong> <span class="cert-line">${stf.qualification}</span></p>
-                        <br><div style="text-align:center;"><img src="${stf.photo}" alt="Staff Photo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #ffb703;"></div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('docDisplayContent').innerHTML = docHtml;
-            navigateTo('doc-view-page');
-        }
-
-        function deleteStaff(index) {
-            if(confirm("Delete karna chahte hain?")) {
-                let staffList = JSON.parse(localStorage.getItem('ssn_staff')) || [];
-                staffList.splice(index, 1);
-                localStorage.setItem('ssn_staff', JSON.stringify(staffList));
-                renderStaffManagement();
-            }
-        }
-
-        function renderActiveStudents() {
-            const tbody = document.getElementById('activeStudentsTableBody');
-            const searchQuery = (document.getElementById('activeStudentSearch').value || '').toLowerCase().trim();
-            tbody.innerHTML = "";
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-
-            if (searchQuery !== "") {
-                studentsList = studentsList.filter(s => (s.name && s.name.toLowerCase().includes(searchQuery)) || (s.srNo && s.srNo.toLowerCase().includes(searchQuery)) || (s.aadhar && s.aadhar.includes(searchQuery)));
-            }
-
-            if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Koi active student record nahi mila.</td></tr>`; return; }
-
-            studentsList.forEach((s, index) => {
-                const docs = s.uploadedDocs || {};
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${s.srNo || 'N/A'}</b></td><td><b>${s.name}</b></td><td>${s.fatherName}</td><td>${s.class}</td><td>${s.aadhar || 'N/A'}</td>
-                        <td style="text-align:center;"><button class="btn-tc" onclick="generateTC(${index})">📄 Issue TC</button></td>
-                        <td>
-                            <select id="docType_${index}" class="table-select"><option value="Student Aadhaar Card">Student Aadhaar Card</option><option value="Parents Aadhaar Card">Parents Aadhaar Card</option></select>
-                            <label style="width:100%; display:inline-block; padding:4px; background:#2563eb; color:white; font-size:11px; border-radius:4px; cursor:pointer; text-align:center; font-weight:bold;">📤 Upload Doc<input type="file" style="display:none;" onchange="uploadTableDoc(event, ${index})"></label>
-                        </td>
-                        <td style="text-align:center;"><img src="${s.photo}" class="img-preview-thumb" onclick="document.getElementById('photoInput_${index}').click()" style="cursor:pointer;"><input type="file" id="photoInput_${index}" style="display:none;" accept="image/*" onchange="uploadStudentPhoto(event, ${index})"></td>
-                        <td><button class="btn-delete" onclick="deleteActiveStudent(${index})">🗑 Delete</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function renderClassWiseStudents() {
-            const tbody = document.getElementById('allStudentsTableBody');
-            const selectedClass = document.getElementById('classListFilter').value;
-            tbody.innerHTML = "";
-            let studentsList = (JSON.parse(localStorage.getItem('ssn_students')) || []).filter(s => s.class === selectedClass);
-            if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Is class me koi student nahi mila.</td></tr>`; return; }
-            studentsList.forEach(s => {
-                tbody.innerHTML += `<tr><td><b>${s.srNo || 'N/A'}</b></td><td><b>${s.name}</b></td><td>${s.fatherName}</td><td>${s.mobile || 'N/A'}</td></tr>`;
-            });
-        }
-
-        function renderFeeManagement() {
-            const tbody = document.getElementById('feeTableBody');
-            tbody.innerHTML = "";
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="13" style="text-align:center;">Koi fee record nahi hai.</td></tr>`; return; }
-            studentsList.forEach((s, index) => {
-                const totalCalculatedFee = parseFloat(s.annualFee || 4200) + parseFloat(s.admissionFee || 200) + parseFloat(s.uniformFee || 1000) + parseFloat(s.icardDiaryFee || 100) + parseFloat(s.oldFee || 0);
-                const currentDueVal = totalCalculatedFee - parseFloat(s.paidFee || 0);
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${s.srNo}</b></td><td><b>${s.name}</b></td><td>${s.class}</td>
-                        <td><input type="number" class="table-input-fee" id="oldFee_${index}" value="${s.oldFee || 0}" oninput="updateFeeRowValues(${index})"></td>
-                        <td><b>₹${totalCalculatedFee}</b></td>
-                        <td><input type="number" class="table-input-fee" id="inst1_${index}" value="${s.inst1 || 1050}" oninput="updateFeeRowValues(${index})"></td>
-                        <td><input type="number" class="table-input-fee" id="inst2_${index}" value="${s.inst2 || 1050}" oninput="updateFeeRowValues(${index})"></td>
-                        <td><input type="number" class="table-input-fee" id="inst3_${index}" value="${s.inst3 || 1050}" oninput="updateFeeRowValues(${index})"></td>
-                        <td><input type="number" class="table-input-fee" id="inst4_${index}" value="${s.inst4 || 1050}" oninput="updateFeeRowValues(${index})"></td>
-                        <td><input type="number" class="table-input-fee" id="paidFee_${index}" value="${s.paidFee || 0}" style="color: green; font-weight: bold;" oninput="updateFeeRowValues(${index})"></td>
-                        <td><input type="date" id="feeDate_${index}" value="${s.feeDepositDate || todayStr}" style="padding:3px; font-size:11px;" onchange="updateFeeRowValues(${index})"></td>
-                        <td><b id="currentDueDisplay_${index}" style="color: #dc2626;">₹${currentDueVal >= 0 ? currentDueVal : 0}</b></td>
-                        <td style="text-align:center;"><button class="btn-pay" onclick="payStudentFee(${index})">✅ Pay</button><button class="btn-fee-receipt" onclick="generateFeeReceipt(${index})">🖨 Receipt</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function renderAttendance() {
-            const tbody = document.getElementById('attendanceTableBody');
-            tbody.innerHTML = "";
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Attendance ke liye student add karein.</td></tr>`; return; }
-            studentsList.forEach(s => {
-                tbody.innerHTML += `<tr><td><b>${s.srNo}</b></td><td>${s.name}</td><td>${s.class}</td><td><select style="padding:4px;"><option>Present</option><option>Absent</option></select></td></tr>`;
-            });
-        }
-
-        /* --- I-CARD DIRECTORY & DOWNLOAD LOGIC --- */
-        function renderICardDirectory() {
-            const tbody = document.getElementById('icardTableBody');
-            tbody.innerHTML = "";
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            if (studentsList.length === 0) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Koi student registered nahi hai.</td></tr>`; return; }
-            studentsList.forEach((s, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${s.srNo || 'N/A'}</b></td><td><b>${s.name}</b></td><td>${s.fatherName}</td><td>${s.class}</td><td>${s.mobile || 'N/A'}</td>
-                        <td style="text-align:center;"><button class="btn-generate-icard" onclick="openSingleICard(${index})">🪪 Generate I-Card</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function openSingleICard(index) {
-            let studentsList = JSON.parse(localStorage.getItem('ssn_students')) || [];
-            let s = studentsList[index];
-            if (!s) return;
-
-            const icardHtml = `
-                <div class="icard-single-box" id="printable-icard">
-                    <div class="icard-header">
-                        <h4>Saraswati Shishu Niketan J H School</h4>
-                        <p>Suhag Nagar, Firozabad (U.P.)</p>
-                    </div>
-                    <div class="icard-content-row">
-                        <div class="icard-photo-wrap"><img src="${s.photo}" alt="Student Photo"></div>
-                        <div class="icard-details">
-                            <div class="icard-field"><strong>Name:</strong> <span>${s.name.toUpperCase()}</span></div>
-                            <div class="icard-field"><strong>Father:</strong> <span>${s.fatherName}</span></div>
-                            <div class="icard-field"><strong>Class:</strong> <span>${s.class}</span></div>
-                            <div class="icard-field"><strong>Reg. No.:</strong> <span>${s.srNo || 'N/A'}</span></div>
-                            <div class="icard-field"><strong>ID No.:</strong> <span>${s.aadhar || 'N/A'}</span></div>
-                            <div class="icard-field"><strong>Mobile:</strong> <span>${s.mobile || 'N/A'}</span></div>
-                        </div>
-                    </div>
-                    <div class="icard-footer">
-                        <div class="sig-box">Student Signature</div>
-                        <div class="sig-box">Principal Authority</div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('icardSingleDisplay').innerHTML = icardHtml;
-            navigateTo('icard-view-page');
-        }
-
-        function downloadICardPDF() {
-            const element = document.getElementById('printable-icard');
-            const options = {
-                margin:       10,
-                filename:     'Student_ID_Card.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
-            };
-            html2pdf().from(element).set(options).save();
+        // Initial Load
+        window.onload = function() {
+            renderActiveStudents();
         }
     </script>
 </body>

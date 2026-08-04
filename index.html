@@ -129,7 +129,12 @@
             <div class="menu-card" onclick="navigateTo('active-students-page')">
                 <div class="icon">👨‍🎓</div>
                 <h3>Active Students</h3>
-                <p>Manage Active Students Directory</p>
+                <p>Manage Active Students</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('students-list-page')">
+                <div class="icon">📋</div>
+                <h3>Students List</h3>
+                <p>Complete Student Directory</p>
             </div>
             <div class="menu-card" onclick="navigateTo('admission-form-page')">
                 <div class="icon">📝</div>
@@ -143,8 +148,8 @@
             </div>
             <div class="menu-card" onclick="navigateTo('staff-page')">
                 <div class="icon">👨‍🏫</div>
-                <h3>Staff</h3>
-                <p>Teachers & Staff Directory</p>
+                <h3>Staff Directory</h3>
+                <p>Teachers & Staff Details</p>
             </div>
             <div class="menu-card" onclick="navigateTo('attendance-page')">
                 <div class="icon">📅</div>
@@ -159,68 +164,39 @@
         </div>
     </div>
 
-    <!-- 1. ACTIVE STUDENTS & STUDENT LIST PAGE -->
+    <!-- 1. ACTIVE STUDENTS PAGE -->
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
             <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Add Student</button>
         </div>
         <div class="app-header">
-            <h2>Active Student Directory</h2>
+            <h2>Active Students Management</h2>
         </div>
 
         <div class="search-box-bar">
-            <input type="text" id="activeStudentSearch" placeholder="🔍 Search student by Name or Roll Number..." oninput="renderActiveStudents()">
+            <input type="text" id="activeStudentSearch" placeholder="🔍 Search active student..." oninput="renderActiveStudents()">
         </div>
 
         <div id="activeStudentFormContainer" class="form-card" style="display:none;">
-            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Fill Student Details</h3>
+            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Add New Student</h3>
             <form id="activeStudentForm" onsubmit="saveStudentData(event, 'activeStudentForm', 'activeStudentFormContainer')">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label>Roll No. / S.R. Number *</label>
-                        <input type="text" id="actSrNo" required placeholder="Enter Roll / S.R. Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Student Name *</label>
-                        <input type="text" id="actName" required placeholder="Enter Student Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Father Name *</label>
-                        <input type="text" id="actFather" required placeholder="Enter Father Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile Number *</label>
-                        <input type="tel" id="actMobile" maxlength="10" required placeholder="10-digit Mobile Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Class *</label>
+                    <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="actSrNo" required placeholder="Roll Number"></div>
+                    <div class="form-group"><label>Student Name *</label><input type="text" id="actName" required placeholder="Student Name"></div>
+                    <div class="form-group"><label>Father Name *</label><input type="text" id="actFather" required placeholder="Father Name"></div>
+                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="actMobile" maxlength="10" required placeholder="Mobile"></div>
+                    <div class="form-group"><label>Class *</label>
                         <select id="actClass" required>
                             <option value="">-- Select Class --</option>
-                            <option value="Play Way">Play Way</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="LKG">LKG</option>
-                            <option value="UKG">UKG</option>
-                            <option value="Class 1">Class 1</option>
-                            <option value="Class 2">Class 2</option>
-                            <option value="Class 3">Class 3</option>
-                            <option value="Class 4">Class 4</option>
-                            <option value="Class 5">Class 5</option>
-                            <option value="Class 6">Class 6</option>
-                            <option value="Class 7">Class 7</option>
-                            <option value="Class 8">Class 8</option>
-                            <option value="Class 9">Class 9</option>
-                            <option value="Class 10">Class 10</option>
+                            <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Aadhaar Number *</label>
-                        <input type="text" id="actAadhar" maxlength="12" required placeholder="12-digit Aadhaar Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Fee Deposit Date *</label>
-                        <input type="date" id="actFeeDate" required>
-                    </div>
+                    <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="actAadhar" maxlength="12" required placeholder="Aadhaar"></div>
+                    <div class="form-group"><label>Fee Date *</label><input type="date" id="actFeeDate" required></div>
                 </div>
                 <button type="submit" class="btn-submit">💾 Save Student</button>
             </form>
@@ -230,16 +206,7 @@
             <div class="data-table-container">
                 <table class="data-table">
                     <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Father Name</th>
-                            <th>Class</th>
-                            <th>Mobile</th>
-                            <th>Aadhaar</th>
-                            <th>Fee Date</th>
-                            <th>Action</th>
-                        </tr>
+                        <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th><th>Action</th></tr>
                     </thead>
                     <tbody id="activeStudentsTableBody"></tbody>
                 </table>
@@ -247,7 +214,30 @@
         </div>
     </div>
 
-    <!-- 2. NEW ADMISSION FORM PAGE (SYNCED WITH DATABASE) -->
+    <!-- 2. STUDENTS LIST PAGE -->
+    <div id="students-list-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>Complete Students List</h2>
+        </div>
+        <div class="search-box-bar">
+            <input type="text" id="allStudentsSearch" placeholder="🔍 Search in all students..." oninput="renderAllStudentsList()">
+        </div>
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Class</th><th>Mobile</th></tr>
+                    </thead>
+                    <tbody id="allStudentsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NEW ADMISSION FORM PAGE -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -256,140 +246,100 @@
             <h2>New Admission Form</h2>
         </div>
         <div class="form-card">
-            <form id="admissionForm" onsubmit="saveStudentData(event, 'admissionForm', null, 'admission-form-page')">
+            <form id="admissionForm" onsubmit="saveStudentData(event, 'admissionForm', null, 'active-students-page')">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label>Roll No. / S.R. Number *</label>
-                        <input type="text" id="admSrNo" required placeholder="Enter Roll / S.R. Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Student Name *</label>
-                        <input type="text" id="admName" required placeholder="Enter Student Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Father Name *</label>
-                        <input type="text" id="admFather" required placeholder="Enter Father Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile Number *</label>
-                        <input type="tel" id="admMobile" maxlength="10" required placeholder="10-digit Mobile Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Class *</label>
+                    <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="admSrNo" required placeholder="Roll Number"></div>
+                    <div class="form-group"><label>Student Name *</label><input type="text" id="admName" required placeholder="Student Name"></div>
+                    <div class="form-group"><label>Father Name *</label><input type="text" id="admFather" required placeholder="Father Name"></div>
+                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="admMobile" maxlength="10" required placeholder="Mobile"></div>
+                    <div class="form-group"><label>Class *</label>
                         <select id="admClass" required>
                             <option value="">-- Select Class --</option>
-                            <option value="Play Way">Play Way</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="LKG">LKG</option>
-                            <option value="UKG">UKG</option>
-                            <option value="Class 1">Class 1</option>
-                            <option value="Class 2">Class 2</option>
-                            <option value="Class 3">Class 3</option>
-                            <option value="Class 4">Class 4</option>
-                            <option value="Class 5">Class 5</option>
-                            <option value="Class 6">Class 6</option>
-                            <option value="Class 7">Class 7</option>
-                            <option value="Class 8">Class 8</option>
-                            <option value="Class 9">Class 9</option>
-                            <option value="Class 10">Class 10</option>
+                            <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Aadhaar Number *</label>
-                        <input type="text" id="admAadhar" maxlength="12" required placeholder="12-digit Aadhaar Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Fee Deposit Date *</label>
-                        <input type="date" id="admFeeDate" required>
-                    </div>
+                    <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="admAadhar" maxlength="12" required placeholder="Aadhaar"></div>
+                    <div class="form-group"><label>Fee Date *</label><input type="date" id="admFeeDate" required></div>
                 </div>
                 <button type="submit" class="btn-submit">💾 Register Admission</button>
             </form>
         </div>
     </div>
 
-    <!-- 3. FEE MANAGEMENT PAGE (AUTO SYNCED) -->
+    <!-- 4. FEE MANAGEMENT PAGE -->
     <div id="fee-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Fee Management & Records</h2>
-        </div>
+        <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
+        <div class="app-header"><h2>Fee Management</h2></div>
         <div class="info-card">
             <div class="data-table-container">
                 <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Class</th>
-                            <th>Fee Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Fee Date</th><th>Status</th></tr></thead>
                     <tbody id="feeTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 4. ATTENDANCE PAGE (AUTO SYNCED) -->
-    <div id="attendance-page" class="page-container">
+    <!-- 5. STAFF DIRECTORY & ADD STAFF PAGE -->
+    <div id="staff-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+            <button class="btn-add-toggle" onclick="toggleStaffForm()">➕ Add Staff</button>
         </div>
-        <div class="app-header">
-            <h2>Daily Attendance</h2>
+        <div class="app-header"><h2>Staff Directory</h2></div>
+
+        <div id="staffFormContainer" class="form-card" style="display:none;">
+            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Add New Staff Member</h3>
+            <form id="staffForm" onsubmit="saveStaffData(event)">
+                <div class="form-grid">
+                    <div class="form-group"><label>Staff Name *</label><input type="text" id="stfName" required placeholder="Name"></div>
+                    <div class="form-group"><label>Designation / Subject *</label><input type="text" id="stfRole" required placeholder="e.g. Teacher / Clerk"></div>
+                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="stfMobile" maxlength="10" required placeholder="Mobile"></div>
+                    <div class="form-group"><label>Joining Date *</label><input type="date" id="stfJoinDate" required></div>
+                </div>
+                <button type="submit" class="btn-submit">💾 Save Staff</button>
+            </form>
         </div>
+
         <div class="info-card">
             <div class="data-table-container">
                 <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Class</th>
-                            <th>Mark Attendance</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Staff Name</th><th>Designation</th><th>Mobile</th><th>Joining Date</th><th>Action</th></tr></thead>
+                    <tbody id="staffTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. ATTENDANCE PAGE -->
+    <div id="attendance-page" class="page-container">
+        <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
+        <div class="app-header"><h2>Daily Attendance</h2></div>
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Attendance</th></tr></thead>
                     <tbody id="attendanceTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 5. I-CARD PAGE (AUTO SYNCED) -->
+    <!-- 7. I-CARD PAGE -->
     <div id="icard-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>I-Card Directory</h2>
-        </div>
+        <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
+        <div class="app-header"><h2>I-Card Directory</h2></div>
         <div class="info-card">
             <div class="data-table-container">
                 <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Roll / S.R.</th>
-                            <th>Student Name</th>
-                            <th>Father Name</th>
-                            <th>Class</th>
-                            <th>Mobile</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Class</th><th>Mobile</th></tr></thead>
                     <tbody id="icardTableBody"></tbody>
                 </table>
             </div>
         </div>
-    </div>
-
-    <!-- STAFF PAGE -->
-    <div id="staff-page" class="page-container">
-        <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
-        <div class="app-header"><h2>Staff Directory</h2></div>
-        <div class="info-card"><p>Staff management section.</p></div>
     </div>
 
     <!-- JAVASCRIPT GLOBAL LOGIC -->
@@ -402,37 +352,37 @@
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
                 document.getElementById("splash-screen").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("splash-screen").style.visibility = "hidden";
-                }, 800);
+                setTimeout(() => { document.getElementById("splash-screen").style.visibility = "hidden"; }, 800);
             }
         }, 1000);
 
-        // Page Navigation & Auto-Sync Loader
+        // Page Navigation
         function navigateTo(pageId) {
-            document.querySelectorAll('.page-container').forEach(page => {
-                page.classList.remove('active');
-            });
+            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
 
-            // Page ke hisaab se data load karna
             if(pageId === 'active-students-page') renderActiveStudents();
+            if(pageId === 'students-list-page') renderAllStudentsList();
             if(pageId === 'fee-page') renderFeeRecords();
+            if(pageId === 'staff-page') renderStaffRecords();
             if(pageId === 'attendance-page') renderAttendanceRecords();
             if(pageId === 'icard-page') renderICardRecords();
         }
 
-        // Toggle Form Visibility
+        // Toggles
         function toggleActiveStudentForm() {
-            const formContainer = document.getElementById('activeStudentFormContainer');
-            formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+            const fc = document.getElementById('activeStudentFormContainer');
+            fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleStaffForm() {
+            const fc = document.getElementById('staffFormContainer');
+            fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Universal Save Function (Chahe Active Student se bhare ya New Admission se, data ek hi jagah jayega)
+        // Save Student Data (Synced everywhere)
         function saveStudentData(event, formId, containerId = null, redirectPage = null) {
             event.preventDefault();
-
             let isAdmission = formId === 'admissionForm';
             
             const newStudent = {
@@ -450,132 +400,106 @@
             students.push(newStudent);
             localStorage.setItem('saraswati_students', JSON.stringify(students));
 
-            alert('Student saved successfully and synced across all sections!');
+            alert('Student saved successfully!');
             document.getElementById(formId).reset();
-            
-            if(containerId) {
-                document.getElementById(containerId).style.display = 'none';
-            }
+            if(containerId) document.getElementById(containerId).style.display = 'none';
 
-            if(redirectPage) {
-                navigateTo('active-students-page');
-            } else {
-                renderActiveStudents();
-            }
+            if(redirectPage) navigateTo(redirectPage);
+            else renderActiveStudents();
         }
 
-        // 1. Render Active Students Table
+        // Save Staff Data
+        function saveStaffData(event) {
+            event.preventDefault();
+            const newStaff = {
+                id: Date.now(),
+                name: document.getElementById('stfName').value,
+                role: document.getElementById('stfRole').value,
+                mobile: document.getElementById('stfMobile').value,
+                joinDate: document.getElementById('stfJoinDate').value
+            };
+
+            let staffList = JSON.parse(localStorage.getItem('saraswati_staff')) || [];
+            staffList.push(newStaff);
+            localStorage.setItem('saraswati_staff', JSON.stringify(staffList));
+
+            alert('Staff member saved successfully!');
+            document.getElementById('staffForm').reset();
+            document.getElementById('staffFormContainer').style.display = 'none';
+            renderStaffRecords();
+        }
+
+        // Renders
         function renderActiveStudents() {
             const tbody = document.getElementById('activeStudentsTableBody');
-            const searchInput = document.getElementById('activeStudentSearch');
-            const searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
-            
+            const q = document.getElementById('activeStudentSearch').value.toLowerCase();
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
             tbody.innerHTML = '';
 
-            if (students.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`;
-                return;
-            }
+            const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
 
-            const filteredStudents = students.filter(s => 
-                (s.name && s.name.toLowerCase().includes(searchQuery)) || 
-                (s.srNo && s.srNo.toLowerCase().includes(searchQuery))
-            );
-
-            filteredStudents.forEach(student => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${student.srNo || ''}</td>
-                    <td><b>${student.name || ''}</b></td>
-                    <td>${student.father || ''}</td>
-                    <td>${student.className || ''}</td>
-                    <td>${student.mobile || ''}</td>
-                    <td>${student.aadhar || ''}</td>
-                    <td>${student.feeDate || ''}</td>
-                    <td><button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button></td>
-                `;
-                tbody.appendChild(tr);
+            filtered.forEach(s => {
+                tbody.innerHTML += `<tr>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.feeDate}</td>
+                    <td><button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button></td>
+                </tr>`;
             });
         }
 
-        // 2. Render Fee Records
+        function renderAllStudentsList() {
+            const tbody = document.getElementById('allStudentsTableBody');
+            const q = document.getElementById('allStudentsSearch').value.toLowerCase();
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            tbody.innerHTML = '';
+
+            const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
+
+            filtered.forEach(s => {
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td></tr>`;
+            });
+        }
+
         function renderFeeRecords() {
             const tbody = document.getElementById('feeTableBody');
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-            tbody.innerHTML = '';
-
-            if (students.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No fee records available</td></tr>`;
-                return;
-            }
-
-            students.forEach(student => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${student.srNo || ''}</td>
-                    <td><b>${student.name || ''}</b></td>
-                    <td>${student.className || ''}</td>
-                    <td>${student.feeDate || 'N/A'}</td>
-                    <td><span style="color:green; font-weight:bold;">Paid</span></td>
-                `;
-                tbody.appendChild(tr);
+            tbody.innerHTML = students.length === 0 ? `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No fee records</td></tr>` : '';
+            students.forEach(s => {
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td>${s.feeDate}</td><td><span style="color:green; font-weight:bold;">Paid</span></td></tr>`;
             });
         }
 
-        // 3. Render Attendance Records
+        function renderStaffRecords() {
+            const tbody = document.getElementById('staffTableBody');
+            let staffList = JSON.parse(localStorage.getItem('saraswati_staff')) || [];
+            tbody.innerHTML = staffList.length === 0 ? `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No staff records</td></tr>` : '';
+            staffList.forEach(stf => {
+                tbody.innerHTML += `<tr><td><b>${stf.name}</b></td><td>${stf.role}</td><td>${stf.mobile}</td><td>${stf.joinDate}</td><td><button class="btn-delete" onclick="deleteStaff(${stf.id})">Delete</button></td></tr>`;
+            });
+        }
+
         function renderAttendanceRecords() {
             const tbody = document.getElementById('attendanceTableBody');
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-            tbody.innerHTML = '';
-
-            if (students.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:15px; color:#666;">No students for attendance</td></tr>`;
-                return;
-            }
-
-            students.forEach(student => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${student.srNo || ''}</td>
-                    <td><b>${student.name || ''}</b></td>
-                    <td>${student.className || ''}</td>
-                    <td>
-                        <label><input type="radio" name="att_${student.id}" checked> Present</label> &nbsp;
-                        <label><input type="radio" name="att_${student.id}"> Absent</label>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+            tbody.innerHTML = students.length === 0 ? `<tr><td colspan="4" style="text-align:center; padding:15px; color:#666;">No students</td></tr>` : '';
+            students.forEach(s => {
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td><label><input type="radio" name="att_${s.id}" checked> Present</label> &nbsp; <label><input type="radio" name="att_${s.id}"> Absent</label></td></tr>`;
             });
         }
 
-        // 4. Render I-Card Records
         function renderICardRecords() {
             const tbody = document.getElementById('icardTableBody');
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-            tbody.innerHTML = '';
-
-            if (students.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No students found for I-Card</td></tr>`;
-                return;
-            }
-
-            students.forEach(student => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${student.srNo || ''}</td>
-                    <td><b>${student.name || ''}</b></td>
-                    <td>${student.father || ''}</td>
-                    <td>${student.className || ''}</td>
-                    <td>${student.mobile || ''}</td>
-                `;
-                tbody.appendChild(tr);
+            tbody.innerHTML = students.length === 0 ? `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No students</td></tr>` : '';
+            students.forEach(s => {
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td></tr>`;
             });
         }
 
-        // Delete Student Data
+        // Deletions
         function deleteStudent(id) {
-            if(confirm('Are you sure you want to delete this student?')) {
+            if(confirm('Delete this student?')) {
                 let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
                 students = students.filter(s => s.id !== id);
                 localStorage.setItem('saraswati_students', JSON.stringify(students));
@@ -583,7 +507,15 @@
             }
         }
 
-        // Initial Load
+        function deleteStaff(id) {
+            if(confirm('Delete this staff member?')) {
+                let staffList = JSON.parse(localStorage.getItem('saraswati_staff')) || [];
+                staffList = staffList.filter(stf => stf.id !== id);
+                localStorage.setItem('saraswati_staff', JSON.stringify(staffList));
+                renderStaffRecords();
+            }
+        }
+
         window.onload = function() {
             renderActiveStudents();
         }

@@ -51,7 +51,7 @@
 
         .timer-text { color: #ffb703; font-size: 16px; margin-top: 35px; font-weight: bold; letter-spacing: 1px; }
 
-        /* --- 2. COMMON LAYOUT & UI (FIXED OVERLAP ISSUE) --- */
+        /* --- 2. COMMON LAYOUT & UI --- */
         .page-container { 
             display: none; 
             padding: 12px; 
@@ -159,7 +159,7 @@
         </div>
     </div>
 
-    <!-- ACTIVE STUDENTS PAGE -->
+    <!-- 1. ACTIVE STUDENTS & STUDENT LIST PAGE -->
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -175,7 +175,7 @@
 
         <div id="activeStudentFormContainer" class="form-card" style="display:none;">
             <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Fill Student Details</h3>
-            <form id="activeStudentForm" onsubmit="saveActiveStudent(event)">
+            <form id="activeStudentForm" onsubmit="saveStudentData(event, 'activeStudentForm', 'activeStudentFormContainer')">
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Roll No. / S.R. Number *</label>
@@ -247,14 +247,152 @@
         </div>
     </div>
 
-    <!-- OTHER PAGES -->
-    <div id="admission-form-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>New Admission Form</h2></div><div class="info-card"><p>Admission form section is ready here.</p></div></div>
-    <div id="fee-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>Fee Management</h2></div><div class="info-card"><p>Fee management section is ready here.</p></div></div>
-    <div id="staff-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>Staff Directory</h2></div><div class="info-card"><p>Staff directory section is ready here.</p></div></div>
-    <div id="attendance-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>Daily Attendance</h2></div><div class="info-card"><p>Attendance section is ready here.</p></div></div>
-    <div id="icard-page" class="page-container"><div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div><div class="app-header"><h2>I-Card Generator</h2></div><div class="info-card"><p>I-Card generator section is ready here.</p></div></div>
+    <!-- 2. NEW ADMISSION FORM PAGE (SYNCED WITH DATABASE) -->
+    <div id="admission-form-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>New Admission Form</h2>
+        </div>
+        <div class="form-card">
+            <form id="admissionForm" onsubmit="saveStudentData(event, 'admissionForm', null, 'admission-form-page')">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Roll No. / S.R. Number *</label>
+                        <input type="text" id="admSrNo" required placeholder="Enter Roll / S.R. Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Student Name *</label>
+                        <input type="text" id="admName" required placeholder="Enter Student Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Father Name *</label>
+                        <input type="text" id="admFather" required placeholder="Enter Father Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" id="admMobile" maxlength="10" required placeholder="10-digit Mobile Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="admClass" required>
+                            <option value="">-- Select Class --</option>
+                            <option value="Play Way">Play Way</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Aadhaar Number *</label>
+                        <input type="text" id="admAadhar" maxlength="12" required placeholder="12-digit Aadhaar Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Deposit Date *</label>
+                        <input type="date" id="admFeeDate" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">💾 Register Admission</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- 3. FEE MANAGEMENT PAGE (AUTO SYNCED) -->
+    <div id="fee-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>Fee Management & Records</h2>
+        </div>
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Roll / S.R.</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Fee Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feeTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ATTENDANCE PAGE (AUTO SYNCED) -->
+    <div id="attendance-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>Daily Attendance</h2>
+        </div>
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Roll / S.R.</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Mark Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. I-CARD PAGE (AUTO SYNCED) -->
+    <div id="icard-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>I-Card Directory</h2>
+        </div>
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Roll / S.R.</th>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Mobile</th>
+                        </tr>
+                    </thead>
+                    <tbody id="icardTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAFF PAGE -->
+    <div id="staff-page" class="page-container">
+        <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
+        <div class="app-header"><h2>Staff Directory</h2></div>
+        <div class="info-card"><p>Staff management section.</p></div>
+    </div>
+
+    <!-- JAVASCRIPT GLOBAL LOGIC -->
     <script>
         // Splash Screen Timer
         let timeLeft = 5;
@@ -270,16 +408,19 @@
             }
         }, 1000);
 
-        // Page Navigation Function (Hides all pages, shows only the clicked one)
+        // Page Navigation & Auto-Sync Loader
         function navigateTo(pageId) {
             document.querySelectorAll('.page-container').forEach(page => {
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
-            if(pageId === 'active-students-page') {
-                renderActiveStudents();
-            }
+
+            // Page ke hisaab se data load karna
+            if(pageId === 'active-students-page') renderActiveStudents();
+            if(pageId === 'fee-page') renderFeeRecords();
+            if(pageId === 'attendance-page') renderAttendanceRecords();
+            if(pageId === 'icard-page') renderICardRecords();
         }
 
         // Toggle Form Visibility
@@ -288,39 +429,48 @@
             formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Save Student Data to LocalStorage
-        function saveActiveStudent(event) {
+        // Universal Save Function (Chahe Active Student se bhare ya New Admission se, data ek hi jagah jayega)
+        function saveStudentData(event, formId, containerId = null, redirectPage = null) {
             event.preventDefault();
 
+            let isAdmission = formId === 'admissionForm';
+            
             const newStudent = {
                 id: Date.now(),
-                srNo: document.getElementById('actSrNo').value,
-                name: document.getElementById('actName').value,
-                father: document.getElementById('actFather').value,
-                mobile: document.getElementById('actMobile').value,
-                className: document.getElementById('actClass').value,
-                aadhar: document.getElementById('actAadhar').value,
-                feeDate: document.getElementById('actFeeDate').value
+                srNo: document.getElementById(isAdmission ? 'admSrNo' : 'actSrNo').value,
+                name: document.getElementById(isAdmission ? 'admName' : 'actName').value,
+                father: document.getElementById(isAdmission ? 'admFather' : 'actFather').value,
+                mobile: document.getElementById(isAdmission ? 'admMobile' : 'actMobile').value,
+                className: document.getElementById(isAdmission ? 'admClass' : 'actClass').value,
+                aadhar: document.getElementById(isAdmission ? 'admAadhar' : 'actAadhar').value,
+                feeDate: document.getElementById(isAdmission ? 'admFeeDate' : 'actFeeDate').value
             };
 
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
             students.push(newStudent);
             localStorage.setItem('saraswati_students', JSON.stringify(students));
 
-            alert('Student saved successfully!');
-            document.getElementById('activeStudentForm').reset();
-            document.getElementById('activeStudentFormContainer').style.display = 'none';
-            renderActiveStudents();
+            alert('Student saved successfully and synced across all sections!');
+            document.getElementById(formId).reset();
+            
+            if(containerId) {
+                document.getElementById(containerId).style.display = 'none';
+            }
+
+            if(redirectPage) {
+                navigateTo('active-students-page');
+            } else {
+                renderActiveStudents();
+            }
         }
 
-        // Render Students in Table
+        // 1. Render Active Students Table
         function renderActiveStudents() {
             const tbody = document.getElementById('activeStudentsTableBody');
             const searchInput = document.getElementById('activeStudentSearch');
             const searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
             
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-
             tbody.innerHTML = '';
 
             if (students.length === 0) {
@@ -333,11 +483,6 @@
                 (s.srNo && s.srNo.toLowerCase().includes(searchQuery))
             );
 
-            if (filteredStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No matching student found</td></tr>`;
-                return;
-            }
-
             filteredStudents.forEach(student => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -349,6 +494,80 @@
                     <td>${student.aadhar || ''}</td>
                     <td>${student.feeDate || ''}</td>
                     <td><button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 2. Render Fee Records
+        function renderFeeRecords() {
+            const tbody = document.getElementById('feeTableBody');
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No fee records available</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.srNo || ''}</td>
+                    <td><b>${student.name || ''}</b></td>
+                    <td>${student.className || ''}</td>
+                    <td>${student.feeDate || 'N/A'}</td>
+                    <td><span style="color:green; font-weight:bold;">Paid</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 3. Render Attendance Records
+        function renderAttendanceRecords() {
+            const tbody = document.getElementById('attendanceTableBody');
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:15px; color:#666;">No students for attendance</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.srNo || ''}</td>
+                    <td><b>${student.name || ''}</b></td>
+                    <td>${student.className || ''}</td>
+                    <td>
+                        <label><input type="radio" name="att_${student.id}" checked> Present</label> &nbsp;
+                        <label><input type="radio" name="att_${student.id}"> Absent</label>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 4. Render I-Card Records
+        function renderICardRecords() {
+            const tbody = document.getElementById('icardTableBody');
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No students found for I-Card</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.srNo || ''}</td>
+                    <td><b>${student.name || ''}</b></td>
+                    <td>${student.father || ''}</td>
+                    <td>${student.className || ''}</td>
+                    <td>${student.mobile || ''}</td>
                 `;
                 tbody.appendChild(tr);
             });

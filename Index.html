@@ -1,1 +1,352 @@
-index
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraswati Shishu Niketan J H School</title>
+    <!-- html2pdf library for download functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #0b1120; min-height: 100vh; overflow-x: hidden; color: #333; }
+
+        /* --- 1. SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1e1b4b, #090d16);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .circle-wrapper { 
+            position: relative; width: 260px; height: 260px; 
+            display: flex; justify-content: center; align-items: center; 
+        }
+
+        .outer-border-ring { 
+            position: absolute; width: 242px; height: 242px; border-radius: 50%; 
+            border: 2px solid #ffb703; box-shadow: 0 0 15px rgba(255, 183, 3, 0.5); 
+        }
+
+        .inner-border-ring { 
+            position: absolute; width: 162px; height: 162px; border-radius: 50%; 
+            border: 2px solid #ffb703; 
+        }
+
+        .svg-text-ring { 
+            position: absolute; width: 100%; height: 100%; 
+            animation: rotateText 14s linear infinite; 
+        }
+
+        @keyframes rotateText { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
+        .saraswati-img { 
+            position: absolute; width: 150px; height: 150px; border-radius: 50%; 
+            object-fit: cover; background-color: #ffffff; border: 3px solid #ffb703;
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); z-index: 2;
+        }
+
+        .timer-text { color: #ffb703; font-size: 16px; margin-top: 35px; font-weight: bold; letter-spacing: 1px; }
+
+        /* --- 2. COMMON LAYOUT & UI --- */
+        .page-container { display: none; padding: 12px; opacity: 0; transition: opacity 0.3s ease; max-width: 1000px; margin: 0 auto; }
+        .page-container.active { display: block; opacity: 1; }
+        .top-action-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .back-btn { background: #ffb703; color: #1e1b4b; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .download-action-btn { background: #16a34a; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .app-header { background-color: #1e1b4b; color: white; padding: 18px; text-align: center; border-radius: 12px; margin-bottom: 20px; border-bottom: 4px solid #ffb703; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+
+        /* MENU GRID */
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .vertical-menu-stack { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
+
+        .menu-card { background: white; padding: 20px 10px; border-radius: 16px; text-align: center; cursor: pointer; border-top: 5px solid #1e1b4b; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .menu-card:active { transform: scale(0.96); }
+        .menu-card h3 { color: #1e1b4b; margin-top: 8px; font-size: 16px; font-weight: 700; }
+        .menu-card p { font-size: 12px; color: #666; margin-top: 4px; }
+        .icon { font-size: 34px; }
+
+        /* --- 3. TABLES & FORM STYLES --- */
+        .form-card, .info-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-top: 4px solid #ffb703; margin-bottom: 15px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: bold; color: #1e1b4b; font-size: 13px; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; }
+        
+        .search-box-bar { margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
+        .search-box-bar input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; }
+
+        .filter-box { display: flex; gap: 10px; margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
+        .filter-box select { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #94a3b8; font-weight: bold; color: #1e1b4b; }
+
+        .btn-add-toggle { background: #ffb703; color: #1e1b4b; border: none; padding: 10px 20px; font-weight: bold; font-size: 15px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-submit { width: 100%; background: #1e1b4b; color: #ffb703; border: none; padding: 12px; font-weight: bold; font-size: 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+
+        .data-table-container { overflow-x: auto; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; text-align: left; }
+        .data-table th { background-color: #1e1b4b; color: #ffb703; padding: 10px; border: 1px solid #334155; white-space: nowrap; }
+        .data-table td { padding: 8px 10px; border: 1px solid #cbd5e1; color: #1e293b; vertical-align: middle; }
+        .data-table tr:nth-child(even) { background-color: #f8fafc; }
+
+        .btn-tc { background: #d97706; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .btn-pay { background: #16a34a; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 4px; width: 100%; }
+        .btn-fee-receipt { background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; width: 100%; }
+        .btn-view-doc { background: #7c3aed; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; width: 100%; }
+        .btn-generate-icard { background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; width: 100%; }
+
+        .table-select { padding: 4px; border-radius: 4px; font-size: 11px; border: 1px solid #aaa; margin-bottom: 4px; width: 100%; }
+        .table-input-fee { width: 75px; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; }
+        .img-preview-thumb { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #ccc; }
+
+        /* --- 4. I-CARD STYLES (PHOTO ON LEFT, PRINCIPAL AUTHORITY) --- */
+        .icard-single-box {
+            width: 320px; background: #fff; border-radius: 12px; overflow: hidden;
+            border: 3px solid #1e1b4b; box-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0 auto 20px auto;
+            position: relative; display: flex; flex-direction: column;
+        }
+        .icard-header { background: #1e1b4b; color: #ffb703; width: 100%; padding: 10px; text-align: center; border-bottom: 3px solid #ffb703; }
+        .icard-header h4 { font-size: 13px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+        .icard-header p { font-size: 9px; color: #fff; margin-top: 2px; }
+        
+        .icard-content-row { display: flex; padding: 12px; align-items: center; gap: 12px; }
+        .icard-photo-wrap { width: 85px; height: 95px; border-radius: 6px; border: 2px solid #ffb703; overflow: hidden; background: #f0f0f0; flex-shrink: 0; }
+        .icard-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .icard-details { flex: 1; font-size: 11.5px; text-align: left; }
+        .icard-field { margin-bottom: 3px; display: flex; font-size: 11px; }
+        .icard-field strong { width: 68px; color: #1e1b4b; flex-shrink: 0; }
+        .icard-field span { color: #333; font-weight: 600; word-break: break-word; }
+
+        .icard-footer { background: #f8fafc; border-top: 1px solid #cbd5e1; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .sig-box { text-align: center; font-size: 9px; font-weight: bold; color: #1e1b4b; }
+
+        /* BUTTON WRAPPER FOR I-CARD VIEW PAGE */
+        .icard-action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .icard-action-buttons button {
+            flex: 1;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .btn-download-icard { background: #16a34a; color: white; }
+        .btn-back-icard { background: #ffb703; color: #1e1b4b; }
+
+        /* --- 5. TC & CERTIFICATE STYLES --- */
+        .certificate-box {
+            background: #ffffff; border: 6px double #1e1b4b; border-radius: 8px;
+            padding: 30px; max-width: 750px; margin: 0 auto; color: #1e1b4b;
+            position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .cert-header { text-align: center; border-bottom: 2px solid #ffb703; padding-bottom: 10px; margin-bottom: 20px; }
+        .cert-header h1 { font-size: 22px; color: #1e1b4b; text-transform: uppercase; }
+        .cert-header p { font-size: 12px; color: #555; }
+        .cert-title { text-align: center; margin: 15px 0; }
+        .cert-title span { background: #1e1b4b; color: #ffb703; padding: 5px 20px; border-radius: 4px; font-size: 16px; font-weight: bold; letter-spacing: 1px; }
+        .cert-body { margin-top: 25px; line-height: 2; font-size: 14px; text-align: justify; }
+        .cert-line { border-bottom: 1px dashed #1e1b4b; font-weight: bold; padding: 0 8px; color: #000; }
+        .cert-footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 10px; }
+        .cert-sig-line { text-align: center; font-weight: bold; font-size: 12px; border-top: 1px solid #1e1b4b; width: 160px; padding-top: 5px; }
+
+        @media print {
+            body { background: white; }
+            .top-action-bar, #splash-screen, .app-header, .filter-box, .search-box-bar, .icard-action-buttons { display: none !important; }
+            .page-container { display: block !important; opacity: 1 !important; padding: 0 !important; }
+            .icard-single-box { border: 3px solid #000; box-shadow: none; margin: 0 auto; width: 100%; max-width: 320px; page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="circle-wrapper">
+            <div class="outer-border-ring"></div>
+            <div class="inner-border-ring"></div>
+            
+            <svg class="svg-text-ring" viewBox="0 0 300 300">
+                <path id="circlePath" d="M 150, 150 m -116.5, 0 a 116.5,116.5 0 1,1 233,0 a 116.5,116.5 0 1,1 -233,0" fill="none" />
+                <text fill="#ffb703" font-size="15.5" font-weight="900" letter-spacing="2.4">
+                    <textPath href="#circlePath" startOffset="0%">
+                        ★ SARASWATI SHISHU NIKETAN J H SCHOOL SUHAG NAGAR FIROZABAD ★
+                    </textPath>
+                </text>
+            </svg>
+
+            <img class="saraswati-img" src="./logo.png" alt="Saraswati Ji Photo" onerror="this.src='https://via.placeholder.com/150/1e1b4b/ffb703?text=Saraswati+Ji'">
+        </div>
+        <div class="timer-text" id="countdown">Opening App in 5s...</div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div id="main-menu" class="page-container active">
+        <div class="app-header">
+            <h2>Saraswati Shishu Niketan J H School</h2>
+            <p style="color: #ffb703; margin-top: 4px; font-size: 13px;">School Management ERP • Suhag Nagar, Firozabad</p>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-card" onclick="navigateTo('students-main-page')">
+                <div class="icon">👨‍🎓</div>
+                <h3>Student</h3>
+                <p>Active Students & List</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('admission-form-page')">
+                <div class="icon">📝</div>
+                <h3>New Admission</h3>
+                <p>Register New Student</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('fee-page')">
+                <div class="icon">💰</div>
+                <h3>Fee Management</h3>
+                <p>Track & Collect Fees</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('staff-page')">
+                <div class="icon">👨‍🏫</div>
+                <h3>Staff</h3>
+                <p>Teachers & Staff Directory</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('attendance-page')">
+                <div class="icon">📅</div>
+                <h3>Attendance</h3>
+                <p>Mark Daily Attendance</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('icard-page')">
+                <div class="icon">🪪</div>
+                <h3>I-Card</h3>
+                <p>Generate Student ID Cards</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENT SUB-MENU PAGE -->
+    <div id="students-main-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
+        </div>
+        <div class="app-header">
+            <h2>Student Section</h2>
+        </div>
+        <div class="vertical-menu-stack">
+            <div class="menu-card" onclick="navigateTo('active-students-page')">
+                <div class="icon">🟢</div>
+                <h3>Active Student</h3>
+                <p>Manage Active Students Directory</p>
+            </div>
+            <div class="menu-card" onclick="navigateTo('students-list-page')">
+                <div class="icon">📋</div>
+                <h3>Students List</h3>
+                <p>Class-wise Student Directory</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIVE STUDENTS PAGE -->
+    <div id="active-students-page" class="page-container">
+        <div class="top-action-bar">
+            <button class="back-btn" onclick="navigateTo('students-main-page')">⬅ Back to Student Section</button>
+            <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Add Student</button>
+        </div>
+        <div class="app-header">
+            <h2>Active Student Directory</h2>
+        </div>
+
+        <div class="search-box-bar">
+            <input type="text" id="activeStudentSearch" placeholder="🔍 Search student by Name, S.R. Number or Aadhaar Number..." oninput="renderActiveStudents()">
+        </div>
+
+        <div id="activeStudentFormContainer" class="form-card" style="display:none;">
+            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Fill Student Details</h3>
+            <form id="activeStudentForm" onsubmit="saveActiveStudent(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Roll No. / S.R. Number *</label>
+                        <input type="text" id="actSrNo" required placeholder="Enter Roll / S.R. Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Student Name *</label>
+                        <input type="text" id="actName" required placeholder="Enter Student Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Father Name *</label>
+                        <input type="text" id="actFather" required placeholder="Enter Father Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" id="actMobile" maxlength="10" required placeholder="10-digit Mobile Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="actClass" required>
+                            <option value="">-- Select Class --</option>
+                            <option value="Play Way">Play Way</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Aadhaar Number *</label>
+                        <input type="text" id="actAadhar" maxlength="12" required placeholder="12-digit Aadhaar Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Deposit Date *</label>
+                        <input type="date" id="actFeeDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Old / Due Fee (₹) [Optional]</label>
+                        <input type="number" id="actOldFee" value="0" placeholder="Purani baki fee">
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">💾 Save Student</button>
+            </form>
+        </div>
+
+        <div class="info-card">
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Roll / S.R.</th>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Aadhaar Number</th>
+                            <th>TC Certificate</th>
+                            <th>Upload Documents</th>
+                            <th>Student Photo</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activeStudentsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TC CERTIFICATE VIEW PAGE -->
+    <div id="tc-view-page" class="page-container">
+        <div index

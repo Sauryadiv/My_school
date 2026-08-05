@@ -254,7 +254,7 @@
         </div>
     </div>
 
-    <!-- 2. NEW ADMISSION FORM PAGE (Updated as requested) -->
+    <!-- 2. NEW ADMISSION FORM PAGE (Updated with Single Dropdown ID Proof) -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -266,43 +266,23 @@
             <form id="admissionForm" onsubmit="saveFullAdmission(event)">
                 <div class="form-grid">
                     
-                    <!-- Section 1: ID Proof Dropdowns & Verification -->
+                    <!-- Section 1: Combined Document / ID Proof Dropdown -->
                     <div class="section-title">1. Document / ID Proof Verification</div>
                     
                     <div class="form-group">
-                        <label>Aadhaar Card Available? *</label>
-                        <select id="admHasAadhar" onchange="toggleIdInput('Aadhar')" required>
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
+                        <label>Select Identity Document *</label>
+                        <select id="admSelectedDoc" onchange="handleDocSelection()" required>
+                            <option value="">-- Select Document --</option>
+                            <option value="Aadhaar">Aadhaar Card</option>
+                            <option value="VoterCard">Voter Card</option>
+                            <option value="BirthCert">Birth Certificate</option>
+                            <option value="None">None / Not Available</option>
                         </select>
-                    </div>
-                    <div class="form-group" id="groupAadharNo" style="display:none;">
-                        <label>Aadhaar Document No. *</label>
-                        <input type="text" id="admDocAadharNo" placeholder="Enter Aadhaar Number">
                     </div>
 
-                    <div class="form-group">
-                        <label>Birth Certificate Available? *</label>
-                        <select id="admHasBirthCert" onchange="toggleIdInput('BirthCert')" required>
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="groupBirthCertNo" style="display:none;">
-                        <label>Birth Certificate No. *</label>
-                        <input type="text" id="admDocBirthNo" placeholder="Enter Birth Cert Number">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Voter Card / Other ID Available? *</label>
-                        <select id="admHasVoter" onchange="toggleIdInput('Voter')" required>
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="groupVoterNo" style="display:none;">
-                        <label>Voter Card / Other Doc No. *</label>
-                        <input type="text" id="admDocVoterNo" placeholder="Enter Voter/Other ID Number">
+                    <div class="form-group" id="groupDocNo" style="display:none;">
+                        <label id="lblDocNo">Document Number *</label>
+                        <input type="text" id="admDocNumber" placeholder="Enter selected document number">
                     </div>
 
                     <!-- Section 2: Personal Details -->
@@ -339,8 +319,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="groupPrevSchoolName" style="display:none; grid-column: span 2;">
-                        <label>Previous School Name & Details *</label>
-                        <input type="text" id="admPrevSchoolName" placeholder="Enter school name, class, TC details">
+                        <label>Previous School Name & Details *</label><input type="text" id="admPrevSchoolName" placeholder="Enter school name, class, TC details">
                     </div>
 
                     <!-- Section 4: Admission & Fee Calculation -->
@@ -523,19 +502,30 @@
             fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Dynamic Document Inputs toggle
-        function toggleIdInput(type) {
-            if(type === 'Aadhar') {
-                const val = document.getElementById('admHasAadhar').value;
-                document.getElementById('groupAadharNo').style.display = (val === 'Yes') ? 'block' : 'none';
-            }
-            if(type === 'BirthCert') {
-                const val = document.getElementById('admHasBirthCert').value;
-                document.getElementById('groupBirthCertNo').style.display = (val === 'Yes') ? 'block' : 'none';
-            }
-            if(type === 'Voter') {
-                const val = document.getElementById('admHasVoter').value;
-                document.getElementById('groupVoterNo').style.display = (val === 'Yes') ? 'block' : 'none';
+        // Single Drop-down Document Selection Logic
+        function handleDocSelection() {
+            const selectedVal = document.getElementById('admSelectedDoc').value;
+            const docNoGroup = document.getElementById('groupDocNo');
+            const lblDocNo = document.getElementById('lblDocNo');
+            const inputField = document.getElementById('admDocNumber');
+
+            if(selectedVal === 'None' || selectedVal === '') {
+                docNoGroup.style.display = 'none';
+                inputField.value = '';
+                inputField.required = false;
+            } else {
+                docNoGroup.style.display = 'block';
+                inputField.required = true;
+                if(selectedVal === 'Aadhaar') {
+                    lblDocNo.innerText = 'Aadhaar Card Number *';
+                    inputField.placeholder = 'Enter Aadhaar Number';
+                } else if(selectedVal === 'VoterCard') {
+                    lblDocNo.innerText = 'Voter Card Number *';
+                    inputField.placeholder = 'Enter Voter Card Number';
+                } else if(selectedVal === 'BirthCert') {
+                    lblDocNo.innerText = 'Birth Certificate Number *';
+                    inputField.placeholder = 'Enter Birth Certificate Number';
+                }
             }
         }
 

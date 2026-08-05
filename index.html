@@ -66,6 +66,14 @@
         .back-btn { background: #ffb703; color: #1e1b4b; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
         .app-header { background-color: #1e1b4b; color: white; padding: 18px; text-align: center; border-radius: 12px; margin-bottom: 20px; border-bottom: 4px solid #ffb703; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
+        /* SUB TABS NAVIGATION */
+        .sub-tab-bar { display: flex; gap: 10px; margin-bottom: 15px; background: #1e1b4b; padding: 8px; border-radius: 8px; }
+        .sub-tab-btn { flex: 1; background: transparent; color: #fff; border: none; padding: 10px; font-weight: bold; font-size: 13px; border-radius: 6px; cursor: pointer; text-align: center; }
+        .sub-tab-btn.active-sub { background: #ffb703; color: #1e1b4b; }
+
+        .sub-section { display: none; }
+        .sub-section.active-sub-section { display: block; }
+
         /* MENU GRID */
         .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .menu-card { background: white; padding: 20px 10px; border-radius: 16px; text-align: center; cursor: pointer; border-top: 5px solid #1e1b4b; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
@@ -82,7 +90,7 @@
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
         
         .search-box-bar { margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
-        .search-box-bar input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; background: #fff; }
+        .search-box-bar input, .search-box-bar select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; background: #fff; }
 
         .btn-add-toggle { background: #ffb703; color: #1e1b4b; border: none; padding: 10px 20px; font-weight: bold; font-size: 15px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .btn-submit { width: 100%; background: #1e1b4b; color: #ffb703; border: none; padding: 12px; font-weight: bold; font-size: 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
@@ -129,12 +137,7 @@
             <div class="menu-card" onclick="navigateTo('active-students-page')">
                 <div class="icon">👨‍🎓</div>
                 <h3>Active Students</h3>
-                <p>Manage Active Students</p>
-            </div>
-            <div class="menu-card" onclick="navigateTo('students-list-page')">
-                <div class="icon">📋</div>
-                <h3>Students List</h3>
-                <p>Complete Student Directory</p>
+                <p>Active & Class-Wise Directory</p>
             </div>
             <div class="menu-card" onclick="navigateTo('admission-form-page')">
                 <div class="icon">📝</div>
@@ -164,80 +167,93 @@
         </div>
     </div>
 
-    <!-- 1. ACTIVE STUDENTS PAGE -->
+    <!-- 1. ACTIVE STUDENTS PAGE WITH SUB-TABS (Active Students Upar, Class Wise Neeche) -->
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
             <button class="btn-add-toggle" onclick="toggleActiveStudentForm()">➕ Add Student</button>
         </div>
         <div class="app-header">
-            <h2>Active Students Management</h2>
+            <h2>Active Students Portal</h2>
         </div>
 
-        <div class="search-box-bar">
-            <input type="text" id="activeStudentSearch" placeholder="🔍 Search active student..." oninput="renderActiveStudents()">
+        <!-- Sub Tab Buttons -->
+        <div class="sub-tab-bar">
+            <button class="sub-tab-btn active-sub" id="subBtn1" onclick="switchSubTab('active-list-sub')">1. Active Students List</button>
+            <button class="sub-tab-btn" id="subBtn2" onclick="switchSubTab('class-wise-sub')">2. Class-Wise Students</button>
         </div>
 
-        <div id="activeStudentFormContainer" class="form-card" style="display:none;">
-            <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Add New Student</h3>
-            <form id="activeStudentForm" onsubmit="saveStudentData(event, 'activeStudentForm', 'activeStudentFormContainer')">
-                <div class="form-grid">
-                    <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="actSrNo" required placeholder="Roll Number"></div>
-                    <div class="form-group"><label>Student Name *</label><input type="text" id="actName" required placeholder="Student Name"></div>
-                    <div class="form-group"><label>Father Name *</label><input type="text" id="actFather" required placeholder="Father Name"></div>
-                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="actMobile" maxlength="10" required placeholder="Mobile"></div>
-                    <div class="form-group"><label>Class *</label>
-                        <select id="actClass" required>
-                            <option value="">-- Select Class --</option>
-                            <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
-                            <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
-                            <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
-                            <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
-                        </select>
+        <!-- SUB SECTION 1: ACTIVE STUDENTS LIST -->
+        <div id="active-list-sub" class="sub-section active-sub-section">
+            <div class="search-box-bar">
+                <input type="text" id="activeStudentSearch" placeholder="🔍 Search active student by Name or Roll No..." oninput="renderActiveStudents()">
+            </div>
+
+            <div id="activeStudentFormContainer" class="form-card" style="display:none;">
+                <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Add New Student</h3>
+                <form id="activeStudentForm" onsubmit="saveStudentData(event, 'activeStudentForm', 'activeStudentFormContainer')">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="actSrNo" required placeholder="Roll Number"></div>
+                        <div class="form-group"><label>Student Name *</label><input type="text" id="actName" required placeholder="Student Name"></div>
+                        <div class="form-group"><label>Father Name *</label><input type="text" id="actFather" required placeholder="Father Name"></div>
+                        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="actMobile" maxlength="10" required placeholder="Mobile"></div>
+                        <div class="form-group"><label>Class *</label>
+                            <select id="actClass" required>
+                                <option value="">-- Select Class --</option>
+                                <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                                <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
+                                <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
+                                <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="actAadhar" maxlength="12" required placeholder="Aadhaar"></div>
+                        <div class="form-group"><label>Fee Date *</label><input type="date" id="actFeeDate" required></div>
                     </div>
-                    <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="actAadhar" maxlength="12" required placeholder="Aadhaar"></div>
-                    <div class="form-group"><label>Fee Date *</label><input type="date" id="actFeeDate" required></div>
+                    <button type="submit" class="btn-submit">💾 Save Student</button>
+                </form>
+            </div>
+
+            <div class="info-card">
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="activeStudentsTableBody"></tbody>
+                    </table>
                 </div>
-                <button type="submit" class="btn-submit">💾 Save Student</button>
-            </form>
+            </div>
         </div>
 
-        <div class="info-card">
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th><th>Action</th></tr>
-                    </thead>
-                    <tbody id="activeStudentsTableBody"></tbody>
-                </table>
+        <!-- SUB SECTION 2: CLASS WISE STUDENTS -->
+        <div id="class-wise-sub" class="sub-section">
+            <div class="search-box-bar">
+                <label style="display:block; font-weight:bold; color:#1e1b4b; margin-bottom:5px; font-size:13px;">Filter by Class:</label>
+                <select id="filterClassSelect" onchange="renderClassWiseStudents()">
+                    <option value="">-- Select Class to View Students --</option>
+                    <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                    <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
+                    <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
+                    <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
+                </select>
+            </div>
+
+            <div class="info-card">
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th></tr>
+                        </thead>
+                        <tbody id="classWiseTableBody">
+                            <tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. STUDENTS LIST PAGE -->
-    <div id="students-list-page" class="page-container">
-        <div class="top-action-bar">
-            <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
-        </div>
-        <div class="app-header">
-            <h2>Complete Students List</h2>
-        </div>
-        <div class="search-box-bar">
-            <input type="text" id="allStudentsSearch" placeholder="🔍 Search in all students..." oninput="renderAllStudentsList()">
-        </div>
-        <div class="info-card">
-            <div class="data-table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Class</th><th>Mobile</th></tr>
-                    </thead>
-                    <tbody id="allStudentsTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. NEW ADMISSION FORM PAGE -->
+    <!-- 2. NEW ADMISSION FORM PAGE -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -269,7 +285,7 @@
         </div>
     </div>
 
-    <!-- 4. FEE MANAGEMENT PAGE -->
+    <!-- 3. FEE MANAGEMENT PAGE -->
     <div id="fee-page" class="page-container">
         <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
         <div class="app-header"><h2>Fee Management</h2></div>
@@ -283,7 +299,7 @@
         </div>
     </div>
 
-    <!-- 5. STAFF DIRECTORY & ADD STAFF PAGE -->
+    <!-- 4. STAFF DIRECTORY & ADD STAFF PAGE -->
     <div id="staff-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -314,7 +330,7 @@
         </div>
     </div>
 
-    <!-- 6. ATTENDANCE PAGE -->
+    <!-- 5. ATTENDANCE PAGE -->
     <div id="attendance-page" class="page-container">
         <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
         <div class="app-header"><h2>Daily Attendance</h2></div>
@@ -328,7 +344,7 @@
         </div>
     </div>
 
-    <!-- 7. I-CARD PAGE -->
+    <!-- 6. I-CARD PAGE -->
     <div id="icard-page" class="page-container">
         <div class="top-action-bar"><button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button></div>
         <div class="app-header"><h2>I-Card Directory</h2></div>
@@ -362,16 +378,33 @@
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
 
-            if(pageId === 'active-students-page') renderActiveStudents();
-            if(pageId === 'students-list-page') renderAllStudentsList();
+            if(pageId === 'active-students-page') {
+                switchSubTab('active-list-sub');
+                renderActiveStudents();
+            }
             if(pageId === 'fee-page') renderFeeRecords();
             if(pageId === 'staff-page') renderStaffRecords();
             if(pageId === 'attendance-page') renderAttendanceRecords();
             if(pageId === 'icard-page') renderICardRecords();
         }
 
+        // Sub-Tabs Switcher for Active Students Section
+        function switchSubTab(subId) {
+            document.querySelectorAll('.sub-section').forEach(sec => sec.classList.remove('active-sub-section'));
+            document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active-sub'));
+
+            document.getElementById(subId).classList.add('active-sub-section');
+            if(subId === 'active-list-sub') {
+                document.getElementById('subBtn1').classList.add('active-sub');
+                renderActiveStudents();
+            } else {
+                document.getElementById('subBtn2').classList.add('active-sub');
+            }
+        }
+
         // Toggles
         function toggleActiveStudentForm() {
+            switchSubTab('active-list-sub');
             const fc = document.getElementById('activeStudentFormContainer');
             fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
         }
@@ -429,7 +462,7 @@
             renderStaffRecords();
         }
 
-        // Renders
+        // Renders Active Students
         function renderActiveStudents() {
             const tbody = document.getElementById('activeStudentsTableBody');
             const q = document.getElementById('activeStudentSearch').value.toLowerCase();
@@ -447,17 +480,28 @@
             });
         }
 
-        function renderAllStudentsList() {
-            const tbody = document.getElementById('allStudentsTableBody');
-            const q = document.getElementById('allStudentsSearch').value.toLowerCase();
+        // Renders Class Wise Students
+        function renderClassWiseStudents() {
+            const selectedClass = document.getElementById('filterClassSelect').value;
+            const tbody = document.getElementById('classWiseTableBody');
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
             tbody.innerHTML = '';
 
-            const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
-            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
+            if(!selectedClass) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
+                return;
+            }
+
+            const filtered = students.filter(s => s.className === selectedClass);
+            if (filtered.length === 0) { 
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
+                return; 
+            }
 
             filtered.forEach(s => {
-                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td></tr>`;
+                tbody.innerHTML += `<tr>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.feeDate}</td>
+                </tr>`;
             });
         }
 

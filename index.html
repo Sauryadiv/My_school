@@ -103,6 +103,7 @@
         .data-table tr:nth-child(even) { background-color: #f8fafc; }
 
         .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .btn-tc { background: #0ea5e9; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-right: 4px; }
         .section-title { font-size: 15px; color: #1e1b4b; border-bottom: 2px solid #ffb703; padding-bottom: 5px; margin: 15px 0 10px 0; font-weight: bold; grid-column: 1 / -1; }
     </style>
 </head>
@@ -198,7 +199,16 @@
                         <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="actSrNo" required placeholder="Roll Number"></div>
                         <div class="form-group"><label>Student Name *</label><input type="text" id="actName" required placeholder="Student Name"></div>
                         <div class="form-group"><label>Father Name *</label><input type="text" id="actFather" required placeholder="Father Name"></div>
-                        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="actMobile" maxlength="10" required placeholder="Mobile"></div>
+                        <div class="form-group"><label>Mother Name *</label><input type="text" id="actMother" required placeholder="Mother Name"></div>
+                        <div class="form-group"><label>Date of Birth (DOB) *</label><input type="date" id="actDob" required></div>
+                        <div class="form-group"><label>Gender *</label>
+                            <select id="actGender" required>
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                         <div class="form-group"><label>Class *</label>
                             <select id="actClass" required>
                                 <option value="">-- Select Class --</option>
@@ -208,8 +218,9 @@
                                 <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="actCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
-                        <div class="form-group"><label>Due Fees (Previous Year) *</label><input type="number" id="actDueFees" required placeholder="Amount in ₹"></div>
+                        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="actMobile" maxlength="10" required placeholder="Mobile"></div>
+                        <div class="form-group"><label>Total Fees *</label><input type="number" id="actTotalFees" required placeholder="Total Fee Amount in ₹"></div>
+                        <div class="form-group"><label>Due Fees *</label><input type="number" id="actDueFees" required placeholder="Due Fee Amount in ₹"></div>
                     </div>
                     <button type="submit" class="btn-submit">💾 Save Student</button>
                 </form>
@@ -219,7 +230,18 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Caste</th><th>Prev. Due Fees</th><th>Action</th></tr>
+                            <tr>
+                                <th>SR No</th>
+                                <th>Class</th>
+                                <th>Student Name</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
+                                <th>DOB</th>
+                                <th>Gender</th>
+                                <th>Total Fees</th>
+                                <th>Due Fee</th>
+                                <th>Actions (TC / Delete)</th>
+                            </tr>
                         </thead>
                         <tbody id="activeStudentsTableBody"></tbody>
                     </table>
@@ -244,10 +266,21 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Caste</th><th>Prev. Due Fees</th></tr>
+                            <tr>
+                                <th>SR No</th>
+                                <th>Class</th>
+                                <th>Student Name</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
+                                <th>DOB</th>
+                                <th>Gender</th>
+                                <th>Total Fees</th>
+                                <th>Due Fee</th>
+                                <th>Actions (TC / Delete)</th>
+                            </tr>
                         </thead>
                         <tbody id="classWiseTableBody">
-                            <tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
+                            <tr><td colspan="10" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -255,7 +288,7 @@
         </div>
     </div>
 
-    <!-- 2. NEW ADMISSION FORM PAGE (Updated with Combined Doc ID & Combined Camera Uploads) -->
+    <!-- 2. NEW ADMISSION FORM PAGE (Combined Doc ID & Camera Uploads) -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -707,12 +740,14 @@
                 srNo: document.getElementById('actSrNo').value,
                 name: document.getElementById('actName').value,
                 father: document.getElementById('actFather').value,
-                mobile: document.getElementById('actMobile').value,
+                mother: document.getElementById('actMother').value,
+                dob: document.getElementById('actDob').value,
+                gender: document.getElementById('actGender').value,
                 className: document.getElementById('actClass').value,
-                caste: document.getElementById('actCaste').value,
+                mobile: document.getElementById('actMobile').value,
+                totalFees: document.getElementById('actTotalFees').value,
                 dueFees: document.getElementById('actDueFees').value,
-                totalFees: document.getElementById('actDueFees').value,
-                depositFees: 0
+                depositFees: Number(document.getElementById('actTotalFees').value) - Number(document.getElementById('actDueFees').value)
             };
 
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
@@ -746,6 +781,63 @@
             renderStaffRecords();
         }
 
+        // Generate TC Function
+        function generateTC(id) {
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            const s = students.find(item => item.id === id);
+            if(!s) return;
+
+            // Create a printable Transfer Certificate window/view
+            const tcWindow = window.open('', '_blank');
+            tcWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="hi">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Transfer Certificate - ${s.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 30px; color: #000; }
+                        .tc-box { border: 5px double #1e1b4b; padding: 30px; max-width: 700px; margin: 0 auto; position: relative; }
+                        .school-header { text-align: center; border-bottom: 2px solid #1e1b4b; padding-bottom: 15px; margin-bottom: 20px; }
+                        .school-header h1 { color: #1e1b4b; font-size: 24px; margin-bottom: 5px; }
+                        .school-header p { font-size: 13px; color: #555; }
+                        .tc-title { text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin: 20px 0; color: #1e1b4b; }
+                        .tc-details { font-size: 15px; line-height: 2.2; margin-bottom: 40px; }
+                        .tc-details b { display: inline-block; width: 180px; color: #1e1b4b; }
+                        .signatures { display: flex; justify-content: space-between; margin-top: 60px; font-weight: bold; font-size: 14px; }
+                        .print-btn { display: block; width: 200px; margin: 20px auto; padding: 10px; background: #1e1b4b; color: #ffb703; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; font-size: 16px; }
+                        @media print { .print-btn { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="tc-box">
+                        <div class="school-header">
+                            <h1>SARASWATI SHISHU NIKETAN J H SCHOOL</h1>
+                            <p>Suhag Nagar, Firozabad (U.P.) • School Management ERP</p>
+                        </div>
+                        <div class="tc-title">TRANSFER CERTIFICATE (TC)</div>
+                        <div class="tc-details">
+                            <b>S.R. / Roll No.:</b> ${s.srNo || '-'}<br>
+                            <b>Student Name:</b> ${s.name || '-'}<br>
+                            <b>Mother's Name:</b> ${s.mother || '-'}<br>
+                            <b>Father's Name:</b> ${s.father || '-'}<br>
+                            <b>Date of Birth:</b> ${s.dob || '-'}<br>
+                            <b>Gender:</b> ${s.gender || '-'}<br>
+                            <b>Studying in Class:</b> ${s.className || '-'}<br>
+                            <b>Fee Status:</b> Due Balance: ₹${s.dueFees || '0'}<br>
+                        </div>
+                        <div class="signatures">
+                            <div>Checked By</div>
+                            <div>Principal Signature & Seal</div>
+                        </div>
+                    </div>
+                    <button class="print-btn" onclick="window.print()">🖨️ Print / Save TC</button>
+                </body>
+                </html>
+            `);
+            tcWindow.document.close();
+        }
+
         // Renders Active Students
         function renderActiveStudents() {
             const tbody = document.getElementById('activeStudentsTableBody');
@@ -754,12 +846,23 @@
             tbody.innerHTML = '';
 
             const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
-            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
-                    <td><button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button></td>
+                    <td>${s.srNo || '-'}</td>
+                    <td><b>${s.className || '-'}</b></td>
+                    <td><b>${s.name || '-'}</b></td>
+                    <td>${s.father || '-'}</td>
+                    <td>${s.mother || '-'}</td>
+                    <td>${s.dob || '-'}</td>
+                    <td>${s.gender || '-'}</td>
+                    <td>₹${s.totalFees || '0'}</td>
+                    <td style="color:red; font-weight:bold;">₹${s.dueFees || '0'}</td>
+                    <td style="white-space: nowrap;">
+                        <button class="btn-tc" onclick="generateTC(${s.id})">📄 TC</button>
+                        <button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button>
+                    </td>
                 </tr>`;
             });
         }
@@ -772,19 +875,31 @@
             tbody.innerHTML = '';
 
             if(!selectedClass) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
                 return;
             }
 
             const filtered = students.filter(s => s.className === selectedClass);
             if (filtered.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
                 return; 
             }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
+                    <td>${s.srNo || '-'}</td>
+                    <td><b>${s.className || '-'}</b></td>
+                    <td><b>${s.name || '-'}</b></td>
+                    <td>${s.father || '-'}</td>
+                    <td>${s.mother || '-'}</td>
+                    <td>${s.dob || '-'}</td>
+                    <td>${s.gender || '-'}</td>
+                    <td>₹${s.totalFees || '0'}</td>
+                    <td style="color:red; font-weight:bold;">₹${s.dueFees || '0'}</td>
+                    <td style="white-space: nowrap;">
+                        <button class="btn-tc" onclick="generateTC(${s.id})">📄 TC</button>
+                        <button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button>
+                    </td>
                 </tr>`;
             });
         }
@@ -835,6 +950,7 @@
                 students = students.filter(s => s.id !== id);
                 localStorage.setItem('saraswati_students', JSON.stringify(students));
                 renderActiveStudents();
+                renderClassWiseStudents();
             }
         }
 

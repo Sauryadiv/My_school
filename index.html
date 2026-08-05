@@ -94,6 +94,7 @@
 
         .btn-add-toggle { background: #ffb703; color: #1e1b4b; border: none; padding: 10px 20px; font-weight: bold; font-size: 15px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .btn-submit { width: 100%; background: #1e1b4b; color: #ffb703; border: none; padding: 12px; font-weight: bold; font-size: 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+        .btn-secondary { background: #2563eb; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; margin-top: 5px; }
 
         .data-table-container { overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; text-align: left; }
@@ -254,7 +255,7 @@
         </div>
     </div>
 
-    <!-- 2. NEW ADMISSION FORM PAGE (Updated with Single Dropdown ID Proof) -->
+    <!-- 2. NEW ADMISSION FORM PAGE (Updated with Combined Doc ID & Combined Camera Uploads) -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -360,14 +361,35 @@
                     <div class="form-group"><label>Deposit Amount (Paid) *</label><input type="number" id="feeDeposit" oninput="calculateFees()" required placeholder="Enter paid amount in ₹"></div>
                     <div class="form-group"><label>Due Amount (Balance)</label><input type="text" id="feeDue" readonly style="background:#fee2e2; font-weight:bold; color:red;"></div>
 
-                    <!-- Section 5: Document Uploads -->
-                    <div class="section-title">5. Upload Documents (Scans / Photos)</div>
+                    <!-- Section 5: Combined Upload Documents with Camera Option -->
+                    <div class="section-title">5. Upload Documents (Choose File or Live Camera Photo)</div>
 
-                    <div class="form-group"><label>Student Photo *</label><input type="file" id="docStudentPhoto" accept="image/*" required></div>
-                    <div class="form-group"><label>Aadhaar Card (Student/Guardian)</label><input type="file" id="docAadhaarFile" accept="image/*,.pdf"></div>
-                    <div class="form-group"><label>Voter Card / Other ID</label><input type="file" id="docVoterFile" accept="image/*,.pdf"></div>
-                    <div class="form-group"><label>Guardian Aadhaar (Front & Back)</label><input type="file" id="docGuardianAadhaar" accept="image/*,.pdf"></div>
-                    <div class="form-group"><label>Birth Certificate</label><input type="file" id="docBirthCertFile" accept="image/*,.pdf"></div>
+                    <div class="form-group">
+                        <label>Select Document Type to Upload *</label>
+                        <select id="uploadDocType" onchange="updateUploadLabel()">
+                            <option value="">-- Choose Document Type --</option>
+                            <option value="Student Photo">Student Photo</option>
+                            <option value="Aadhaar Card">Aadhaar Card</option>
+                            <option value="Voter Card">Voter Card</option>
+                            <option value="Birth Certificate">Birth Certificate</option>
+                            <option value="Guardian Aadhaar">Guardian Aadhaar (Front/Back)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="lblFileCapture">Choose File or Capture from Camera *</label>
+                        <!-- capture="environment" attribute enables direct mobile camera opening -->
+                        <input type="file" id="dynamicDocFile" accept="image/*,application/pdf" capture="environment">
+                        <button type="button" class="btn-secondary" onclick="addDocumentToList()">➕ Add to Uploaded List</button>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Successfully Attached Documents List:</label>
+                        <div id="attachedDocsContainer" style="background:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:6px; min-height:45px; font-size:13px; color:#1e1b4b;">
+                            <span style="color:#666;">No documents added yet.</span>
+                        </div>
+                    </div>
+
                 </div>
 
                 <button type="submit" class="btn-submit">💾 Submit & Register Admission</button>
@@ -450,6 +472,9 @@
 
     <!-- JAVASCRIPT GLOBAL LOGIC -->
     <script>
+        // Array to store attached documents dynamically
+        let uploadedDocumentsList = [];
+
         // Splash Screen Timer
         let timeLeft = 5;
         const countdownTimer = setInterval(() => {
@@ -502,7 +527,7 @@
             fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Single Drop-down Document Selection Logic
+        // Single Drop-down Document Selection Logic (ID Proof)
         function handleDocSelection() {
             const selectedVal = document.getElementById('admSelectedDoc').value;
             const docNoGroup = document.getElementById('groupDocNo');
@@ -534,6 +559,63 @@
             document.getElementById('groupPrevSchoolName').style.display = (val === 'Yes') ? 'block' : 'none';
         }
 
+        // Upload label handler for files & camera capture
+        function updateUploadLabel() {
+            const docType = document.getElementById('uploadDocType').value;
+            const lbl = document.getElementById('lblFileCapture');
+            if(docType) {
+                lbl.innerText = `Upload or Capture Photo for ${docType} *`;
+            } else {
+                lbl.innerText = `Choose File or Capture from Camera *`;
+            }
+        }
+
+        // Add document to dynamic list with camera option support
+        function addDocumentToList() {
+            const docType = document.getElementById('uploadDocType').value;
+            const fileInput = document.getElementById('dynamicDocFile');
+
+            if(!docType) {
+                alert('Please select a document type first!');
+                return;
+            }
+            if(fileInput.files.length === 0) {
+                alert('Please choose a file or capture a photo using camera!');
+                return;
+            }
+
+            const fileName = fileInput.files[0].name;
+            uploadedDocumentsList.push({ type: docType, name: fileName });
+
+            // Reset selection fields
+            document.getElementById('uploadDocType').value = '';
+            fileInput.value = '';
+            document.getElementById('lblFileCapture').innerText = `Choose File or Capture from Camera *`;
+
+            renderAttachedDocs();
+        }
+
+        // Render attached documents list container
+        function renderAttachedDocs() {
+            const container = document.getElementById('attachedDocsContainer');
+            if(uploadedDocumentsList.length === 0) {
+                container.innerHTML = `<span style="color:#666;">No documents added yet.</span>`;
+                return;
+            }
+
+            let html = '<ul style="margin-left: 15px;">';
+            uploadedDocumentsList.forEach((item, index) => {
+                html += `<li><b>${item.type}</b>: ${item.name} <span style="color:red; cursor:pointer; margin-left:10px;" onclick="removeAttachedDoc(${index})">[Remove]</span></li>`;
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+
+        function removeAttachedDoc(index) {
+            uploadedDocumentsList.splice(index, 1);
+            renderAttachedDocs();
+        }
+
         // Fee Calculations based on Class and Rules
         function calculateFees() {
             const className = document.getElementById('admClass').value;
@@ -549,25 +631,21 @@
 
             const extraContainer = document.getElementById('class910ExtraContainer');
 
-            // Class groupings
             const isPlayTo5 = ['Play Way', 'Nursery', 'LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'].includes(className);
             const is6To8 = ['Class 6', 'Class 7', 'Class 8'].includes(className);
             const is9To10 = ['Class 9', 'Class 10'].includes(className);
 
-            // Installment rules
             if(isPlayTo5) installmentFee = 1050;
             else if(is6To8) installmentFee = 1350;
             else if(is9To10) installmentFee = 1650;
 
-            // Uniform rules
             if(isPlayTo5 || is6To8) {
                 if(uniformOpt === '1_dress') uniformFee = 500;
                 else if(uniformOpt === '2_dresses') uniformFee = (isPlayTo5 ? 1000 : 1200);
             } else if(is9To10) {
-                if(uniformOpt === '1_dress' || uniformOpt === '2_dresses') uniformFee = 700; // single dress rule for 9-10
+                if(uniformOpt === '1_dress' || uniformOpt === '2_dresses') uniformFee = 700;
             }
 
-            // Board and practical fee for 9-10
             if(is9To10) {
                 extraContainer.style.display = 'grid';
                 boardRegFee = 1500;
@@ -606,15 +684,18 @@
                 className: document.getElementById('admClass').value,
                 totalFees: document.getElementById('feeTotal').value,
                 depositFees: document.getElementById('feeDeposit').value,
-                dueFees: document.getElementById('feeDue').value
+                dueFees: document.getElementById('feeDue').value,
+                documents: uploadedDocumentsList
             };
 
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
             students.push(newStudent);
             localStorage.setItem('saraswati_students', JSON.stringify(students));
 
-            alert('New Admission registered successfully with complete details & fee calculation!');
+            alert('New Admission registered successfully with complete details & uploaded documents!');
             document.getElementById('admissionForm').reset();
+            uploadedDocumentsList = [];
+            renderAttachedDocs();
             navigateTo('active-students-page');
         }
 

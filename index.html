@@ -87,7 +87,7 @@
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-weight: bold; color: #1e1b4b; font-size: 13px; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
         
         .search-box-bar { margin-bottom: 15px; background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; }
         .search-box-bar input, .search-box-bar select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 14px; font-weight: bold; color: #1e1b4b; background: #fff; }
@@ -102,6 +102,7 @@
         .data-table tr:nth-child(even) { background-color: #f8fafc; }
 
         .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .section-title { font-size: 15px; color: #1e1b4b; border-bottom: 2px solid #ffb703; padding-bottom: 5px; margin: 15px 0 10px 0; font-weight: bold; grid-column: 1 / -1; }
     </style>
 </head>
 <body>
@@ -190,8 +191,8 @@
             </div>
 
             <div id="activeStudentFormContainer" class="form-card" style="display:none;">
-                <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Add New Student</h3>
-                <form id="activeStudentForm" onsubmit="saveStudentData(event, 'activeStudentForm', 'activeStudentFormContainer')">
+                <h3 style="color: #1e1b4b; margin-bottom: 12px; font-size: 16px;">📝 Quick Add Student</h3>
+                <form id="activeStudentForm" onsubmit="saveQuickStudent(event)">
                     <div class="form-grid">
                         <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="actSrNo" required placeholder="Roll Number"></div>
                         <div class="form-group"><label>Student Name *</label><input type="text" id="actName" required placeholder="Student Name"></div>
@@ -206,7 +207,6 @@
                                 <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="actAadhar" maxlength="12" required placeholder="Aadhaar"></div>
                         <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="actCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
                         <div class="form-group"><label>Due Fees (Previous Year) *</label><input type="number" id="actDueFees" required placeholder="Amount in ₹"></div>
                     </div>
@@ -218,7 +218,7 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Caste</th><th>Prev. Due Fees</th><th>Action</th></tr>
+                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Caste</th><th>Prev. Due Fees</th><th>Action</th></tr>
                         </thead>
                         <tbody id="activeStudentsTableBody"></tbody>
                     </table>
@@ -243,10 +243,10 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Aadhaar</th><th>Caste</th><th>Prev. Due Fees</th></tr>
+                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Caste</th><th>Prev. Due Fees</th></tr>
                         </thead>
                         <tbody id="classWiseTableBody">
-                            <tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
+                            <tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -254,7 +254,7 @@
         </div>
     </div>
 
-    <!-- 2. NEW ADMISSION FORM PAGE -->
+    <!-- 2. NEW ADMISSION FORM PAGE (Updated as requested) -->
     <div id="admission-form-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -263,14 +263,91 @@
             <h2>New Admission Form</h2>
         </div>
         <div class="form-card">
-            <form id="admissionForm" onsubmit="saveStudentData(event, 'admissionForm', null, 'active-students-page')">
+            <form id="admissionForm" onsubmit="saveFullAdmission(event)">
                 <div class="form-grid">
+                    
+                    <!-- Section 1: ID Proof Dropdowns & Verification -->
+                    <div class="section-title">1. Document / ID Proof Verification</div>
+                    
+                    <div class="form-group">
+                        <label>Aadhaar Card Available? *</label>
+                        <select id="admHasAadhar" onchange="toggleIdInput('Aadhar')" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupAadharNo" style="display:none;">
+                        <label>Aadhaar Document No. *</label>
+                        <input type="text" id="admDocAadharNo" placeholder="Enter Aadhaar Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Birth Certificate Available? *</label>
+                        <select id="admHasBirthCert" onchange="toggleIdInput('BirthCert')" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupBirthCertNo" style="display:none;">
+                        <label>Birth Certificate No. *</label>
+                        <input type="text" id="admDocBirthNo" placeholder="Enter Birth Cert Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Voter Card / Other ID Available? *</label>
+                        <select id="admHasVoter" onchange="toggleIdInput('Voter')" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupVoterNo" style="display:none;">
+                        <label>Voter Card / Other Doc No. *</label>
+                        <input type="text" id="admDocVoterNo" placeholder="Enter Voter/Other ID Number">
+                    </div>
+
+                    <!-- Section 2: Personal Details -->
+                    <div class="section-title">2. Student & Family Personal Details</div>
+
                     <div class="form-group"><label>Roll / S.R. No. *</label><input type="text" id="admSrNo" required placeholder="Roll Number"></div>
                     <div class="form-group"><label>Student Name *</label><input type="text" id="admName" required placeholder="Student Name"></div>
                     <div class="form-group"><label>Father Name *</label><input type="text" id="admFather" required placeholder="Father Name"></div>
+                    <div class="form-group"><label>Mother Name *</label><input type="text" id="admMother" required placeholder="Mother Name"></div>
+                    <div class="form-group"><label>Date of Birth (D.O.B) *</label><input type="date" id="admDob" required></div>
                     <div class="form-group"><label>Mobile Number *</label><input type="tel" id="admMobile" maxlength="10" required placeholder="Mobile"></div>
-                    <div class="form-group"><label>Class *</label>
-                        <select id="admClass" required>
+                    
+                    <div class="form-group"><label>Gender *</label>
+                        <select id="admGender" required>
+                            <option value="">-- Select Gender --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="admCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;"><label>Address *</label><textarea id="admAddress" rows="2" required placeholder="Complete Residential Address"></textarea></div>
+
+                    <!-- Section 3: Previous School History -->
+                    <div class="section-title">3. Previous School History</div>
+                    
+                    <div class="form-group">
+                        <label>Studied in Previous School? *</label>
+                        <select id="admHasPrevSchool" onchange="togglePrevSchool()" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupPrevSchoolName" style="display:none; grid-column: span 2;">
+                        <label>Previous School Name & Details *</label>
+                        <input type="text" id="admPrevSchoolName" placeholder="Enter school name, class, TC details">
+                    </div>
+
+                    <!-- Section 4: Admission & Fee Calculation -->
+                    <div class="section-title">4. Admission Class & Fee Breakup</div>
+
+                    <div class="form-group"><label>Admission for Class *</label>
+                        <select id="admClass" onchange="calculateFees()" required>
                             <option value="">-- Select Class --</option>
                             <option value="Play Way">Play Way</option><option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
                             <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
@@ -278,11 +355,43 @@
                             <option value="Class 9">Class 9</option><option value="Class 10">Class 10</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="admAadhar" maxlength="12" required placeholder="Aadhaar"></div>
-                    <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="admCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
-                    <div class="form-group"><label>Due Fees (Previous Year) *</label><input type="number" id="admDueFees" required placeholder="Amount in ₹"></div>
+
+                    <div class="form-group"><label>Admission Fee (Fixed)</label><input type="text" id="feeAdmission" value="200" readonly style="background:#e2e8f0;"></div>
+
+                    <div class="form-group"><label>Uniform Fee Selection *</label>
+                        <select id="feeUniformOpt" onchange="calculateFees()" required>
+                            <option value="0">-- Select Uniform Option --</option>
+                            <option value="1_dress">1 Dress</option>
+                            <option value="2_dresses">2 Dresses</option>
+                            <option value="none">No Uniform / Skip</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group"><label>Uniform Fee (Calculated)</label><input type="text" id="feeUniform" value="0" readonly style="background:#e2e8f0;"></div>
+                    <div class="form-group"><label>Diary + I-Card Fee (Fixed)</label><input type="text" id="feeDiaryICard" value="100" readonly style="background:#e2e8f0;"></div>
+                    <div class="form-group"><label>Installment Fee</label><input type="text" id="feeInstallment" value="0" readonly style="background:#e2e8f0;"></div>
+
+                    <!-- Extra Fields for Class 9 and 10 -->
+                    <div id="class910ExtraContainer" style="display:none; grid-column: 1 / -1; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                        <div class="form-group"><label>Board Registration Fee (Class 9-10)</label><input type="text" id="feeBoardReg" value="1500" readonly style="background:#e2e8f0;"></div>
+                        <div class="form-group"><label>Practical Fee (Class 9-10)</label><input type="text" id="feePractical" value="500" readonly style="background:#e2e8f0;"></div>
+                    </div>
+
+                    <div class="form-group"><label>Total Calculated Fee *</label><input type="text" id="feeTotal" readonly style="background:#fef08a; font-weight:bold; color:#1e1b4b;"></div>
+                    <div class="form-group"><label>Deposit Amount (Paid) *</label><input type="number" id="feeDeposit" oninput="calculateFees()" required placeholder="Enter paid amount in ₹"></div>
+                    <div class="form-group"><label>Due Amount (Balance)</label><input type="text" id="feeDue" readonly style="background:#fee2e2; font-weight:bold; color:red;"></div>
+
+                    <!-- Section 5: Document Uploads -->
+                    <div class="section-title">5. Upload Documents (Scans / Photos)</div>
+
+                    <div class="form-group"><label>Student Photo *</label><input type="file" id="docStudentPhoto" accept="image/*" required></div>
+                    <div class="form-group"><label>Aadhaar Card (Student/Guardian)</label><input type="file" id="docAadhaarFile" accept="image/*,.pdf"></div>
+                    <div class="form-group"><label>Voter Card / Other ID</label><input type="file" id="docVoterFile" accept="image/*,.pdf"></div>
+                    <div class="form-group"><label>Guardian Aadhaar (Front & Back)</label><input type="file" id="docGuardianAadhaar" accept="image/*,.pdf"></div>
+                    <div class="form-group"><label>Birth Certificate</label><input type="file" id="docBirthCertFile" accept="image/*,.pdf"></div>
                 </div>
-                <button type="submit" class="btn-submit">💾 Register Admission</button>
+
+                <button type="submit" class="btn-submit">💾 Submit & Register Admission</button>
             </form>
         </div>
     </div>
@@ -294,7 +403,7 @@
         <div class="info-card">
             <div class="data-table-container">
                 <table class="data-table">
-                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Prev. Due Fees</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Total Fee</th><th>Paid</th><th>Due Amount</th><th>Status</th></tr></thead>
                     <tbody id="feeTableBody"></tbody>
                 </table>
             </div>
@@ -404,7 +513,6 @@
             }
         }
 
-        // Toggles
         function toggleActiveStudentForm() {
             switchSubTab('active-list-sub');
             const fc = document.getElementById('activeStudentFormContainer');
@@ -415,21 +523,125 @@
             fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Save Student Data (Synced everywhere)
-        function saveStudentData(event, formId, containerId = null, redirectPage = null) {
+        // Dynamic Document Inputs toggle
+        function toggleIdInput(type) {
+            if(type === 'Aadhar') {
+                const val = document.getElementById('admHasAadhar').value;
+                document.getElementById('groupAadharNo').style.display = (val === 'Yes') ? 'block' : 'none';
+            }
+            if(type === 'BirthCert') {
+                const val = document.getElementById('admHasBirthCert').value;
+                document.getElementById('groupBirthCertNo').style.display = (val === 'Yes') ? 'block' : 'none';
+            }
+            if(type === 'Voter') {
+                const val = document.getElementById('admHasVoter').value;
+                document.getElementById('groupVoterNo').style.display = (val === 'Yes') ? 'block' : 'none';
+            }
+        }
+
+        function togglePrevSchool() {
+            const val = document.getElementById('admHasPrevSchool').value;
+            document.getElementById('groupPrevSchoolName').style.display = (val === 'Yes') ? 'block' : 'none';
+        }
+
+        // Fee Calculations based on Class and Rules
+        function calculateFees() {
+            const className = document.getElementById('admClass').value;
+            const uniformOpt = document.getElementById('feeUniformOpt').value;
+            const deposit = Number(document.getElementById('feeDeposit').value) || 0;
+
+            let admissionFee = 200;
+            let diaryIcardFee = 100;
+            let uniformFee = 0;
+            let installmentFee = 0;
+            let boardRegFee = 0;
+            let practicalFee = 0;
+
+            const extraContainer = document.getElementById('class910ExtraContainer');
+
+            // Class groupings
+            const isPlayTo5 = ['Play Way', 'Nursery', 'LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'].includes(className);
+            const is6To8 = ['Class 6', 'Class 7', 'Class 8'].includes(className);
+            const is9To10 = ['Class 9', 'Class 10'].includes(className);
+
+            // Installment rules
+            if(isPlayTo5) installmentFee = 1050;
+            else if(is6To8) installmentFee = 1350;
+            else if(is9To10) installmentFee = 1650;
+
+            // Uniform rules
+            if(isPlayTo5 || is6To8) {
+                if(uniformOpt === '1_dress') uniformFee = 500;
+                else if(uniformOpt === '2_dresses') uniformFee = (isPlayTo5 ? 1000 : 1200);
+            } else if(is9To10) {
+                if(uniformOpt === '1_dress' || uniformOpt === '2_dresses') uniformFee = 700; // single dress rule for 9-10
+            }
+
+            // Board and practical fee for 9-10
+            if(is9To10) {
+                extraContainer.style.display = 'grid';
+                boardRegFee = 1500;
+                practicalFee = 500;
+            } else {
+                extraContainer.style.display = 'none';
+                boardRegFee = 0;
+                practicalFee = 0;
+            }
+
+            document.getElementById('feeUniform').value = uniformFee;
+            document.getElementById('feeInstallment').value = installmentFee;
+
+            const total = admissionFee + uniformFee + diaryIcardFee + installmentFee + boardRegFee + practicalFee;
+            const due = total - deposit;
+
+            document.getElementById('feeTotal').value = total;
+            document.getElementById('feeDue').value = due;
+        }
+
+        // Save Full Admission Form data
+        function saveFullAdmission(event) {
             event.preventDefault();
-            let isAdmission = formId === 'admissionForm';
-            
+
             const newStudent = {
                 id: Date.now(),
-                srNo: document.getElementById(isAdmission ? 'admSrNo' : 'actSrNo').value,
-                name: document.getElementById(isAdmission ? 'admName' : 'actName').value,
-                father: document.getElementById(isAdmission ? 'admFather' : 'actFather').value,
-                mobile: document.getElementById(isAdmission ? 'admMobile' : 'actMobile').value,
-                className: document.getElementById(isAdmission ? 'admClass' : 'actClass').value,
-                aadhar: document.getElementById(isAdmission ? 'admAadhar' : 'actAadhar').value,
-                caste: document.getElementById(isAdmission ? 'admCaste' : 'actCaste').value,
-                dueFees: document.getElementById(isAdmission ? 'admDueFees' : 'actDueFees').value
+                srNo: document.getElementById('admSrNo').value,
+                name: document.getElementById('admName').value,
+                father: document.getElementById('admFather').value,
+                mother: document.getElementById('admMother').value,
+                dob: document.getElementById('admDob').value,
+                mobile: document.getElementById('admMobile').value,
+                gender: document.getElementById('admGender').value,
+                caste: document.getElementById('admCaste').value,
+                address: document.getElementById('admAddress').value,
+                className: document.getElementById('admClass').value,
+                totalFees: document.getElementById('feeTotal').value,
+                depositFees: document.getElementById('feeDeposit').value,
+                dueFees: document.getElementById('feeDue').value
+            };
+
+            let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
+            students.push(newStudent);
+            localStorage.setItem('saraswati_students', JSON.stringify(students));
+
+            alert('New Admission registered successfully with complete details & fee calculation!');
+            document.getElementById('admissionForm').reset();
+            navigateTo('active-students-page');
+        }
+
+        // Quick Student Save (from Active Students section)
+        function saveQuickStudent(event) {
+            event.preventDefault();
+            const newStudent = {
+                id: Date.now(),
+                srNo: document.getElementById('actSrNo').value,
+                name: document.getElementById('actName').value,
+                father: document.getElementById('actFather').value,
+                mobile: document.getElementById('actMobile').value,
+                className: document.getElementById('actClass').value,
+                caste: document.getElementById('actCaste').value,
+                dueFees: document.getElementById('actDueFees').value,
+                totalFees: document.getElementById('actDueFees').value,
+                depositFees: 0
             };
 
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
@@ -437,11 +649,9 @@
             localStorage.setItem('saraswati_students', JSON.stringify(students));
 
             alert('Student saved successfully!');
-            document.getElementById(formId).reset();
-            if(containerId) document.getElementById(containerId).style.display = 'none';
-
-            if(redirectPage) navigateTo(redirectPage);
-            else renderActiveStudents();
+            document.getElementById('activeStudentForm').reset();
+            document.getElementById('activeStudentFormContainer').style.display = 'none';
+            renderActiveStudents();
         }
 
         // Save Staff Data
@@ -473,11 +683,11 @@
             tbody.innerHTML = '';
 
             const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
-            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
                     <td><button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button></td>
                 </tr>`;
             });
@@ -491,19 +701,19 @@
             tbody.innerHTML = '';
 
             if(!selectedClass) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
                 return;
             }
 
             const filtered = students.filter(s => s.className === selectedClass);
             if (filtered.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
                 return; 
             }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
                 </tr>`;
             });
         }
@@ -511,9 +721,12 @@
         function renderFeeRecords() {
             const tbody = document.getElementById('feeTableBody');
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
-            tbody.innerHTML = students.length === 0 ? `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No fee records</td></tr>` : '';
+            tbody.innerHTML = students.length === 0 ? `<tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">No fee records</td></tr>` : '';
             students.forEach(s => {
-                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td>₹${s.dueFees || '0'}</td><td><span style="color:${Number(s.dueFees) > 0 ? 'red' : 'green'}; font-weight:bold;">${Number(s.dueFees) > 0 ? 'Pending' : 'Clear'}</span></td></tr>`;
+                const total = s.totalFees || 0;
+                const paid = s.depositFees || 0;
+                const due = s.dueFees || 0;
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td>₹${total}</td><td>₹${paid}</td><td>₹${due}</td><td><span style="color:${Number(due) > 0 ? 'red' : 'green'}; font-weight:bold;">${Number(due) > 0 ? 'Pending' : 'Clear'}</span></td></tr>`;
             });
         }
 

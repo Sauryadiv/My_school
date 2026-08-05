@@ -167,7 +167,7 @@
         </div>
     </div>
 
-    <!-- 1. ACTIVE STUDENTS PAGE WITH SUB-TABS (Active Students Upar, Class Wise Neeche) -->
+    <!-- 1. ACTIVE STUDENTS PAGE WITH SUB-TABS -->
     <div id="active-students-page" class="page-container">
         <div class="top-action-bar">
             <button class="back-btn" onclick="navigateTo('main-menu')">⬅ Main Menu</button>
@@ -207,7 +207,8 @@
                             </select>
                         </div>
                         <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="actAadhar" maxlength="12" required placeholder="Aadhaar"></div>
-                        <div class="form-group"><label>Fee Date *</label><input type="date" id="actFeeDate" required></div>
+                        <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="actCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
+                        <div class="form-group"><label>Due Fees (Previous Year) *</label><input type="number" id="actDueFees" required placeholder="Amount in ₹"></div>
                     </div>
                     <button type="submit" class="btn-submit">💾 Save Student</button>
                 </form>
@@ -217,7 +218,7 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th><th>Action</th></tr>
+                            <tr><th>Roll/SR</th><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Aadhaar</th><th>Caste</th><th>Prev. Due Fees</th><th>Action</th></tr>
                         </thead>
                         <tbody id="activeStudentsTableBody"></tbody>
                     </table>
@@ -242,10 +243,10 @@
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Aadhaar</th><th>Fee Date</th></tr>
+                            <tr><th>Roll/SR</th><th>Student Name</th><th>Father Name</th><th>Mobile</th><th>Aadhaar</th><th>Caste</th><th>Prev. Due Fees</th></tr>
                         </thead>
                         <tbody id="classWiseTableBody">
-                            <tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
+                            <tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -278,7 +279,8 @@
                         </select>
                     </div>
                     <div class="form-group"><label>Aadhaar Number *</label><input type="text" id="admAadhar" maxlength="12" required placeholder="Aadhaar"></div>
-                    <div class="form-group"><label>Fee Date *</label><input type="date" id="admFeeDate" required></div>
+                    <div class="form-group"><label>Caste (जाति) *</label><input type="text" id="admCaste" required placeholder="e.g. General, OBC, SC, ST"></div>
+                    <div class="form-group"><label>Due Fees (Previous Year) *</label><input type="number" id="admDueFees" required placeholder="Amount in ₹"></div>
                 </div>
                 <button type="submit" class="btn-submit">💾 Register Admission</button>
             </form>
@@ -292,7 +294,7 @@
         <div class="info-card">
             <div class="data-table-container">
                 <table class="data-table">
-                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Fee Date</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Roll/SR</th><th>Student Name</th><th>Class</th><th>Prev. Due Fees</th><th>Status</th></tr></thead>
                     <tbody id="feeTableBody"></tbody>
                 </table>
             </div>
@@ -426,7 +428,8 @@
                 mobile: document.getElementById(isAdmission ? 'admMobile' : 'actMobile').value,
                 className: document.getElementById(isAdmission ? 'admClass' : 'actClass').value,
                 aadhar: document.getElementById(isAdmission ? 'admAadhar' : 'actAadhar').value,
-                feeDate: document.getElementById(isAdmission ? 'admFeeDate' : 'actFeeDate').value
+                caste: document.getElementById(isAdmission ? 'admCaste' : 'actCaste').value,
+                dueFees: document.getElementById(isAdmission ? 'admDueFees' : 'actDueFees').value
             };
 
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
@@ -470,11 +473,11 @@
             tbody.innerHTML = '';
 
             const filtered = students.filter(s => (s.name && s.name.toLowerCase().includes(q)) || (s.srNo && s.srNo.toLowerCase().includes(q)));
-            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:15px; color:#666;">No students found</td></tr>`; return; }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.feeDate}</td>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.className}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
                     <td><button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button></td>
                 </tr>`;
             });
@@ -488,19 +491,19 @@
             tbody.innerHTML = '';
 
             if(!selectedClass) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">Please select a class above</td></tr>`;
                 return;
             }
 
             const filtered = students.filter(s => s.className === selectedClass);
             if (filtered.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:15px; color:#666;">No students found in ${selectedClass}</td></tr>`; 
                 return; 
             }
 
             filtered.forEach(s => {
                 tbody.innerHTML += `<tr>
-                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.feeDate}</td>
+                    <td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.father}</td><td>${s.mobile}</td><td>${s.aadhar}</td><td>${s.caste || '-'}</td><td>₹${s.dueFees || '0'}</td>
                 </tr>`;
             });
         }
@@ -510,7 +513,7 @@
             let students = JSON.parse(localStorage.getItem('saraswati_students')) || [];
             tbody.innerHTML = students.length === 0 ? `<tr><td colspan="5" style="text-align:center; padding:15px; color:#666;">No fee records</td></tr>` : '';
             students.forEach(s => {
-                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td>${s.feeDate}</td><td><span style="color:green; font-weight:bold;">Paid</span></td></tr>`;
+                tbody.innerHTML += `<tr><td>${s.srNo}</td><td><b>${s.name}</b></td><td>${s.className}</td><td>₹${s.dueFees || '0'}</td><td><span style="color:${Number(s.dueFees) > 0 ? 'red' : 'green'}; font-weight:bold;">${Number(s.dueFees) > 0 ? 'Pending' : 'Clear'}</span></td></tr>`;
             });
         }
 

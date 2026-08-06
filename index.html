@@ -276,7 +276,7 @@
                                 <th>Gender</th>
                                 <th>Total Fees</th>
                                 <th>Due Fee</th>
-                                <th>Actions (TC / Delete)</th>
+                            
                             </tr>
                         </thead>
                         <tbody id="classWiseTableBody">
@@ -897,8 +897,8 @@
                     <td>₹${s.totalFees || '0'}</td>
                     <td style="color:red; font-weight:bold;">₹${s.dueFees || '0'}</td>
                     <td style="white-space: nowrap;">
-                        <button class="btn-tc" onclick="generateTC(${s.id})">📄 TC</button>
-                        <button class="btn-delete" onclick="deleteStudent(${s.id})">Delete</button>
+                    
+                        
                     </td>
                 </tr>`;
             });
